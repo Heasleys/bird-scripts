@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name         Item Market Watch 2
-// @namespace    Heasleys4hemp.itemmarketwatch
+// @name         Bird Market
+// @namespace    Heasleys.birdmarket
 // @version      0.4.2
-// @description  Instabuy/Show Prices
-// @author       You
+// @description  Instabuy/Show Prices in item market
+// @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/imarket.php*
 // @grant        none
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/birdmarket.user.js
 // ==/UserScript==
 
 $( document ).ajaxComplete(function( event, xhr, settings ) {

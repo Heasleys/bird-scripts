@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Bazaargasm
-// @namespace    Heasleys4hemp [1468764]
+// @namespace    Heasleys.bazaargasm
 // @version      0.2
 // @description  Automatically sets max items in bazaar based on cash in hand.
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/bazaar.php*
 // @grant        none
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/bazaargasm.user.js
 // ==/UserScript==
 
 $( document ).ajaxComplete(function( event, xhr, settings ) {

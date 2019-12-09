@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         PlayerFilter
-// @namespace    Heasleys4hemp.PlayerFilter
+// @namespace    Heasleys.PlayerFilter
 // @version      1.2
 // @description  Filter players from advanced user search (version: find players not in a faction and also have donator/subscriber status)
 // @author       Heasleys4hemp [1468764]
 // @include     *.torn.com/userlist.php*
 // @grant        GM_addStyle
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/playerfilter.user.js
 // ==/UserScript==
 
 GM_addStyle(`

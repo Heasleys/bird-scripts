@@ -5,7 +5,7 @@
 // @description  Filter Items from the Torn Auction
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/amarket.php*
-// @updateURL    https://github.com/Heasleys/AuctionFilter/raw/master/AuctionFilter.user.js
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/auctionfilter.user.js
 // ==/UserScript==
 
 //copy pagination-wrap (the page selector element) and paste it to the top of it's own parent element

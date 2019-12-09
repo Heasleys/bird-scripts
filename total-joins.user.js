@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Total Joins
-// @namespace    Heasleys4hemp [1468764]
+// @namespace    Heasleys.totaljoins
 // @version      0.3
 // @description  Count total joins and clears for wall wars
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/war.php*
 // @grant        none
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/total-joins.user.js
 // ==/UserScript==
 
     function countJoins() {

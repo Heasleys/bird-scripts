@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Birdmap
+// @namespace    Heasleys.birdmap
 // @version      0.4.3
 // @description  Easy find factions in list, adds easy copy link of map territories
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
 // @grant        GM_addStyle
 // @grant        GM.xmlHttpRequest
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/birdmap.user.js
 // ==/UserScript==
 
 GM_addStyle(`
