@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.1
+// @version      0.2
 // @description  My weird project to extend the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -36,7 +36,7 @@ $(window).load(function () {
 }
 
 .d #ct-wrap .user-map-container .map-controls {
-  background: url(/images/v2/christmas_town/edge_fade.png) 0 0 no-repeat;
+  //background: url(/images/v2/christmas_town/edge_fade.png) 0 0 no-repeat;
 }
 
 .d .map-directions>.direction {
