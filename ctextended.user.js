@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.4
+// @version      0.5
 // @description  My weird project to extend the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -27,18 +27,32 @@ $(window).load(function () {
     buttonmap.css({"width": usermap.width(),"height": usermap.height()});
     itemcontainer.css({"width": usermap.width()});
     ctwrap.css({"height": "100%"});
+    textcontainer.css({"width": usermap.width(),"height": usermap.height(),"position":"absolute"});
 
     var mapheight = usermap.height();
 
 
-    usermap.prepend(`<p id="ct-message">Welcome to Christmas Town!</p>`);
+    usermap.before(`<p id="ct-message">Welcome to Christmas Town!</p>`);
+
+
+    $('#form').submit(function(){
+        alert('I do something before the actual submission');
+        return true;
+    });
 
 
     interceptFetch('christmas_town.php', (response, url) => {
         console.log(response);
         console.log(url);
-        if (response.success == true) {
-           $('#ct-message').text(response.mapData.trigger.message);
+        if (response.mapData && response.mapData.trigger) {
+            $('#ct-message').text(response.mapData.trigger.message);
+
+            if (response.mapData.trigger.miniGameType) {
+                console.log("I found a mini game");
+                textcontainer.show();
+            } else {
+                textcontainer.hide();
+            }
         }
     });
 
@@ -113,6 +127,12 @@ GM_addStyle(`
 .d #ct-wrap .items-container, .d .items-container {
   min-height: 0;
 }
+
+.game-start-screen___1Rx4- {
+  background: url(/images/v2/christmas_town/minigames/congratulation_bg.jpg) no-repeat;
+  background-size: cover !important;
+}
+
 
 `);
 
