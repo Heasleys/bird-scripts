@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.3
+// @version      0.4
 // @description  My weird project to extend the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -14,34 +14,50 @@
 $(window).load(function () {
 
     var usermap = $('.user-map-container');
+    var ctwrap = $('#ct-wrap');
     var buttonmap = $('.user-map');
     var mapoverview = $('.map-overview');
+    var textcontainer = $('.status-area-container');
+    var itemcontainer = $('.items-container');
 
 
-
+    textcontainer.hide();
     usermap.css({"width": "100%","height": "125%"});
     mapoverview.css({"width": usermap.width(),"height": usermap.height()});
     buttonmap.css({"width": usermap.width(),"height": usermap.height()});
+    itemcontainer.css({"width": usermap.width()});
+    ctwrap.css({"height": "100%"});
 
     var mapheight = usermap.height();
 
 
-    document.querySelector('.map-title').insertAdjacentHTML('afterend', `<p id="ct-message">Welcome to Christmas Town!</p>`);
+    usermap.prepend(`<p id="ct-message">Welcome to Christmas Town!</p>`);
 
 
     interceptFetch('christmas_town.php', (response, url) => {
         console.log(response);
         console.log(url);
         if (response.success == true) {
-
+           $('#ct-message').text(response.mapData.trigger.message);
         }
     });
 
 
 
+GM_addStyle(`
+#ct-message {
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  line-height: 1.6;
+  padding: 6px;
+  color: rgb(102, 143, 163);
+  background: url(/images/v2/christmas_town/bg_image_path.jpg) center 0 no-repeat;
+  background-size: cover;
+  height: 72px;
+}
 
-
-    GM_addStyle(`
 .d #ct-wrap.ct-user-wrap .map-overview .world {
   left: 33%;
   top: 25%;
@@ -94,7 +110,13 @@ $(window).load(function () {
   left: 50%;
 }
 
+.d #ct-wrap .items-container, .d .items-container {
+  min-height: 0;
+}
+
 `);
+
+
 
 });
 
