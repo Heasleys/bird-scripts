@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.2
+// @version      0.3
 // @description  My weird project to extend the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -24,6 +24,22 @@ $(window).load(function () {
     buttonmap.css({"width": usermap.width(),"height": usermap.height()});
 
     var mapheight = usermap.height();
+
+
+    document.querySelector('.map-title').insertAdjacentHTML('afterend', `<p id="ct-message">Welcome to Christmas Town!</p>`);
+
+
+    interceptFetch('christmas_town.php', (response, url) => {
+        console.log(response);
+        console.log(url);
+        if (response.success == true) {
+
+        }
+    });
+
+
+
+
 
     GM_addStyle(`
 .d #ct-wrap.ct-user-wrap .map-overview .world {
@@ -81,3 +97,17 @@ $(window).load(function () {
 `);
 
 });
+
+function interceptFetch(url, callback) {
+    unsafeWindow.fetch = async (input, options) => {
+        const response = await fetch(input, options)
+
+        if (response.url.startsWith("https://www.torn.com/" + url)) {
+            let res = response.clone();
+
+            Promise.resolve(res.json().then((json) => callback(json, res.url)));
+        }
+
+        return response;
+    }
+}
