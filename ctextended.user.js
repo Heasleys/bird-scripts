@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.7
+// @version      0.8
 // @description  My weird project to extend the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -49,8 +49,6 @@ $(window).load(function () {
 
     $('#toggleBorder').on('click', function(){
         buttonmap.toggleClass('wb-user-map');
-        //$('#world').toggleClass('wb-world-fog');
-        //$('#world').toggleClass('wb-world');
 
 
     });
@@ -140,7 +138,6 @@ GM_addStyle(`
 }
 
 .d .map-directions>.direction {
-  //background: rgba(205, 205, 205, 0.3) !important;
   background: rgba(250, 250, 250, 0.7) !important;
 }
 
