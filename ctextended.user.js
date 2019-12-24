@@ -28,7 +28,7 @@ $(window).load(function () {
     contentwrapper.css({"width": "100%"});
 
     statuscontainer.hide();
-    usermap.css({"width": "100%","height": "125%"});
+    usermap.css({"width": "100%","height": "100%"});
     var mapwidth = usermap.width();
     var mapheight = usermap.height();
 
@@ -42,9 +42,23 @@ $(window).load(function () {
 
     usermap.before(`<p id="ct-message">Welcome to Christmas Town!</p>`);
 
+
     $('#toggleTextArea').on('click', function(){
         statuscontainer.toggle();
     });
+
+    $('#toggleBorder').on('click', function(){
+        buttonmap.toggleClass('wb-user-map');
+        //$('#world').toggleClass('wb-world-fog');
+        //$('#world').toggleClass('wb-world');
+
+
+    });
+
+     $('#toggleBorder').toggle(
+            function(){$("#world").css({"left": "18%"});},
+            function(){$("#world").css({"left": "33%"});}
+     );
 
     $('ul.items-list > li:not([class=""])').on('click', function(){
         statuscontainer.toggle();
@@ -99,9 +113,17 @@ GM_addStyle(`
   border: 1px solid #bfd0d8;
 }
 
+.user-map {
+  margin: auto;
+}
+
+.wb-user-map {
+  width: 60% !important;
+}
+
 .d #ct-wrap.ct-user-wrap .map-overview .world {
-  left: 33% !important;
-  top: 25% !important;
+  left: 33%;
+  top: 18%;
 }
 
 .d #ct-wrap .user-map-container .user-map:before {
@@ -118,7 +140,8 @@ GM_addStyle(`
 }
 
 .d .map-directions>.direction {
-  background: rgba(205, 205, 205, 0.3) !important;
+  //background: rgba(205, 205, 205, 0.3) !important;
+  background: rgba(250, 250, 250, 0.7) !important;
 }
 
 .d .map-directions>.direction.south {
@@ -203,6 +226,10 @@ GM_addStyle(`
   padding: 35px !important;
 }
 
+.wrap___lfcFL {
+  padding: 35px !important;
+}
+
 .wrap___2Eoyc {
   padding: 35px !important;
   background-size: cover !important;
@@ -210,6 +237,11 @@ GM_addStyle(`
 
 .board___1EROF {
   height: 100% !important;
+}
+
+.christmas-wreath___2WA9B {
+  height: 100% !important;
+  padding: 35px !important;
 }
 
 .snow___1XpPy {
@@ -249,7 +281,7 @@ GM_addStyle(`
 
 
 
-  $('.core-layout__viewport').before(`<div class="wb-ct-title"><span>CT Extended<button class="wb-ct-button" id="toggleExtend">Extend View</button><button class="wb-ct-button" id="toggleTextArea">Text View</button></span></div>`);
+  $('.core-layout__viewport').before(`<div class="wb-ct-title"><span>CT Extended<button class="wb-ct-button" id="toggleExtend">Extend View</button><button class="wb-ct-button" id="toggleTextArea">Text View</button><button class="wb-ct-button" id="toggleBorder">Toggle Fog</button></span></div>`);
 
     $('#toggleExtend').on('click', function(){
         extendview();
