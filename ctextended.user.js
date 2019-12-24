@@ -46,21 +46,10 @@ $(window).load(function () {
         statuscontainer.toggle();
     });
 
-    $('ffffff').submit(function(){
-        alert('I do something before the actual submission');
-        statuscontainer.show();
-        return true;
-    });
-
     $('ul.items-list > li:not([class=""])').on('click', function(){
         statuscontainer.toggle();
         return true;
     });
-
-     $('body').on('click', function(event){
-         console.log(event);
-         return true;
-});
 
 
     interceptFetch('christmas_town.php', (response, url) => {
