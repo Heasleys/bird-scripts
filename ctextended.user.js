@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      0.8
-// @description  My weird project to extend the christmas town map viewer
+// @version      1.0
+// @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
 // @grant        GM_addStyle
@@ -271,6 +271,13 @@ GM_addStyle(`
   padding: 0 35px !important;
 }
 
+.cookies-layer___gxu__{
+  left: 20% !important;
+}
+
+.board___3zmTp {
+  height: 100% !important;
+}
 
 `);
 
@@ -334,7 +341,7 @@ GM_addStyle(`
 
 
 
-
+//
 function interceptFetch(url, callback) {
     unsafeWindow.fetch = async (input, options) => {
         const response = await fetch(input, options)
