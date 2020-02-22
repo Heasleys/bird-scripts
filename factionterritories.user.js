@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Territories
 // @namespace    Heasleys.factionterritories
-// @version      0.9.0
+// @version      0.9.2
 // @description  faction territory list search
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
@@ -69,6 +69,7 @@ span.wb_success {
   font-size: 16px;
   border-bottom: 1px solid #363636;
   margin-bottom: 3px;
+  padding-bottom: 2px;
 }
 
 .wb_col input {
@@ -85,6 +86,10 @@ span.wb_success {
   padding-left: 22px;
   text-indent: -22px;
   padding-bottom: 3px;
+}
+
+.wb_hide {
+  cursor: pointer;
 }
 
 .wb_input {
@@ -143,9 +148,11 @@ $(window).load(function(){
 
           </div>
           <div class="wb_col">
-          <p>API Key</p>
-           <input class="wb_input wb_input_group" type="text" id="wb_apikey_input" required minlength="16" maxlength="16">
-           <button class="wb_input_button wb_input_group" type="button" id="wb_save_apikey">Save</button>
+          <p class="wb_hide">API Key ▼</p>
+           <div id="api_input" hidden>
+             <input class="wb_input wb_input_group" type="text" id="wb_apikey_input" required minlength="16" maxlength="16">
+             <button class="wb_input_button wb_input_group" type="button" id="wb_save_apikey">Save</button>
+           </div>
           </div>
 
 
@@ -157,6 +164,10 @@ $(window).load(function(){
 
 
     $('#wb_apikey_input').val(APIKEY);
+
+    $(".wb_hide").click(function() {
+        $("#api_input").slideToggle("slow");
+    });
 
 $( document ).ajaxComplete(function(event, jqXHR, ajaxObj) {
   if (ajaxObj.url && ajaxObj.url.includes('step=mapData')) {
@@ -186,6 +197,8 @@ $( document ).ajaxComplete(function(event, jqXHR, ajaxObj) {
       localStorage.setItem('wb_apikey', APIKEY);
         getAPI(APIKEY,factionlist);
     });
+
+
 
 });
 
