@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Territories
 // @namespace    Heasleys.factionterritories
-// @version      0.9.2
+// @version      0.9.3
 // @description  faction territory list search
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
@@ -11,124 +11,6 @@
 
 var APIKEY = localStorage.getItem('wb_apikey') || '';
 
-GM_addStyle(`
-.wb_container {
-  display: flex;
-  flex-direction: column;
-}
-
-.wb_title {
-  border: 1px solid rgba(0, 0, 0, .5);
-  border-bottom: none;
-  border-radius: 5px 5px 0px 0px;
-  color: #ffffff;
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-shadow: rgba(0, 0, 0, 0.65) 1px 1px 2px;
-  font-weight: 400;
-  padding-left: 10px;
-  margin-top: 10px;
-  background-color: rgb(202, 185, 0);
-  background-image: linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.07) 0px);
-  background-size: 4px;
-  height: 30px;
-  line-height: 30px;
-}
-
-span.wb_error {
-  color: #bf532e;
-  text-shadow: none;
-  font-weight: 800;
-}
-
-span.wb_success {
-  color: #478807;
-  text-shadow: none;
-  font-weight: 800;
-}
-
-.wb_content {
-  background-color: #F2F2F2;
-  border: 1px solid rgba(0, 0, 0, .5);
-  border-top: none;
-}
-
-.wb_row {
-  display: flex;
-  margin: 0.75em;
-  justify-content: space-between;
-}
-
-.wb_col {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.wb_col > p {
-  font-weight: bold;
-  font-size: 16px;
-  border-bottom: 1px solid #363636;
-  margin-bottom: 3px;
-  padding-bottom: 2px;
-}
-
-.wb_col input {
-  vertical-align: middle;
-}
-
-.checkboxes span {
-  vertical-align: middle;
-}
-
-.wb_col ul>li {
-  display: block;
-  padding-right: 10px;
-  padding-left: 22px;
-  text-indent: -22px;
-  padding-bottom: 3px;
-}
-
-.wb_hide {
-  cursor: pointer;
-}
-
-.wb_input {
-  width: 118px;
-  height: 23px;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, .5);
-  padding: 0 4px 0 10px;
-}
-
-.wb_input.wb_input_group {
-  border-radius: 5px 0px 0px 5px !important;
-}
-
-.wb_input_button {
-  height: 25px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  border: 1px solid rgba(0, 0, 0, .5);
-}
-
-.wb_input_button:hover {
-  background-color: #fafafa;
-}
-
-.wb_input_button:active {
-  background-color: #d9d9d9;
-}
-
-.wb_input_button.wb_input_group {
-  border-radius: 0px 5px 5px 0px;
-  vertical-align: middle;
-  margin-left: -5px;
-}
-`);
-
-
-
-$(window).load(function(){
 
     document.querySelector('#tab-menu').insertAdjacentHTML('beforebegin', `
     <div class="wb_container">
@@ -136,7 +18,7 @@ $(window).load(function(){
        <div class="wb_content">
         <div class="wb_row">
           <div class="wb_col">
-            <p>Search List</p>
+            <p class="wb_col_title">Search List</p>
             <input class="wb_input" list="flist" id="flistinput">
               <datalist id="flist">
 
@@ -144,11 +26,11 @@ $(window).load(function(){
           </div>
 
           <div class="wb_col">
-          <p>Favorites</p>
+          <p class="wb_col_title">Favorites</p>
 
           </div>
           <div class="wb_col">
-          <p class="wb_hide">API Key ▼</p>
+          <p class="wb_hide wb_col_title">API Key ▼</p>
            <div id="api_input" hidden>
              <input class="wb_input wb_input_group" type="text" id="wb_apikey_input" required minlength="16" maxlength="16">
              <button class="wb_input_button wb_input_group" type="button" id="wb_save_apikey">Save</button>
@@ -201,8 +83,6 @@ $( document ).ajaxComplete(function(event, jqXHR, ajaxObj) {
 
 
 });
-
-});//window.load
 
 
 function getAPI(APIKEY,flist) {
