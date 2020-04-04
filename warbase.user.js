@@ -5,9 +5,7 @@
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
-// @require      http://code.jquery.com/jquery-2.1.1.min.js
 // @run-at       document-start
-// @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // ==/UserScript==
 
