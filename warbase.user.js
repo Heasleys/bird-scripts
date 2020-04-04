@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Warbirds Warbase
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
-// @version      0.1
+// @version      0.2
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
@@ -54,21 +54,27 @@ $(window).load(function(){
 
 
     interceptFetch('faction_wars.php', (response, url) => {
-        $('div.attack.left > a').attr("target","_blank");
+        $('li.enemy > div.attack.left > a').attr("target","_blank");
         $('li.row-animation').removeClass('row-animation');
 
         $.each(response.wars,function(index, value){
             if (index == 0) {return;}
-            let seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
-            var numdays = Math.floor((seconds % 31536000) / 86400);
-            var numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
-            var numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
-            var numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
             var time = "";
-            if (numdays > 0) {time+=numdays + " days "; numseconds = 0;}
-            if (numhours > 0) {time+=numhours + " hours "}
-            if (numminutes > 0) {time+=numminutes + " minutes "}
-            if (numseconds > 0) {time+=numseconds + " seconds"}
+            var seconds = 0;
+
+            if ((value.myFaction.membersQuantity - value.enemyFaction.membersQuantity) > 0) {
+                seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
+                var numdays = Math.floor((seconds % 31536000) / 86400);
+                var numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+                var numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+                var numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+                if (numdays > 0) {time+=numdays + " days "; numseconds = 0;}
+                if (numhours > 0) {time+=numhours + " hours "}
+                if (numminutes > 0) {time+=numminutes + " minutes "}
+                if (numseconds > 0) {time+=numseconds + " seconds"}
+            } else {time = "Never";}
+
+
 
             $("span#"+value.key).text(time);
         });
