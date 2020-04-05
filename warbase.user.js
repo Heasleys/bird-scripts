@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Warbirds Warbase
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
-// @version      0.4
+// @version      0.5
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
@@ -44,12 +44,12 @@ function addWarInfo() {
 }
 
 addWarInfo();
-function interceptFetch(url, callback) {
+function interceptFetch(url,q, callback) {
     var originalFetch = fetch;
     fetch = function() {
         return originalFetch.apply(this, arguments).then(function(data) {
             let dataurl = data.url.toString();
-            if (dataurl.indexOf(url)) {
+            if (dataurl.includes(url) && dataurl.includes(q)) {
                const clone = data.clone();
                clone.json().then((response) => callback(response, data.url));
             }
@@ -58,7 +58,7 @@ function interceptFetch(url, callback) {
     };
 }
 
-    interceptFetch("faction_wars.php", (response, url) => {
+    interceptFetch("faction_wars.php","step=getwardata", (response, url) => {
         $('li.enemy > div.attack.left > a').attr("target","_blank");
         $('li.row-animation').removeClass('row-animation');
         $.each(response.wars,function(index, value){
