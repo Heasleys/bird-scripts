@@ -6,6 +6,7 @@
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
 // @grant        none
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
 // ==/UserScript==
 var styles = `
 .wb-war-span {
