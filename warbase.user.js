@@ -1,28 +1,32 @@
 // ==UserScript==
 // @name         Warbirds Warbase
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
-// @version      0.3
+// @version      0.4
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
-// @run-at       document-start
-// @grant        GM_addStyle
+// @grant        none
 // ==/UserScript==
-
-GM_addStyle(`
+var styles = `
 .wb-war-span {
     padding-left: 11px;
     padding-right: 5px;
-    color: green;
+    color: #888;
 }
 
 .wb-war-info {
     color: black;
-}
+}`;
 
-`);
-$(window).load(function(){
+var styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
 
+
+
+window.addEventListener('load', function() {
+function addWarInfo() {
     $("div.status-wrap").each(function() {
         let war_id = "";
         var href = $(this).children("a").attr("href");
@@ -34,29 +38,28 @@ $(window).load(function(){
         } else {
         war_id = href.split("/").pop();
         }
-        $(this).find("div.name.clearfix").after( `<span class="wb-war-span">Claim in: </span><span class="wb-war-info" id="`+war_id+`"></span>` );
+        $(this).find("div.name.clearfix").after( `<span class="wb-war-span">Claim in: </span><span class="wb-war-info" id="`+war_id+`">Loading...</span>` );
     });
+}
 
+addWarInfo();
+function interceptFetch(url, callback) {
+    var originalFetch = fetch;
+    fetch = function() {
+        return originalFetch.apply(this, arguments).then(function(data) {
+            let dataurl = data.url.toString();
+            if (dataurl.indexOf(url)) {
+               const clone = data.clone();
+               clone.json().then((response) => callback(response, data.url));
+            }
+            return data;
+        });
+    };
+}
 
-    function interceptFetch(url, callback) {
-        var originalFetch = fetch;
-        fetch = function() {
-            return originalFetch.apply(this, arguments).then(function(data) {
-                let dataurl = data.url.toString();
-                if (dataurl.indexOf(url)) {
-                    const clone = data.clone();
-                    clone.json().then((response) => callback(response, data.url));
-                }
-                return data;
-            });
-        };
-    }
-
-
-    interceptFetch('faction_wars.php', (response, url) => {
+    interceptFetch("faction_wars.php", (response, url) => {
         $('li.enemy > div.attack.left > a').attr("target","_blank");
         $('li.row-animation').removeClass('row-animation');
-        console.log(response);
         $.each(response.wars,function(index, value){
             if (index == 0) {return;}
             var time = "";
@@ -81,4 +84,5 @@ $(window).load(function(){
 
     });
 
-});
+
+}, false);
