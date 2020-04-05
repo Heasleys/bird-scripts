@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Intercept Fetch
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/InterceptFetch.user.js
-// @version      1.0
+// @version      1.0.1
 // @description  Different ways to intercept fetches/ajax requests on Torn
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
@@ -23,12 +23,12 @@
     });
 
 
-function interceptFetch(url, callback) {
+function interceptFetch(url,q, callback) {
     var originalFetch = fetch;
     fetch = function() {
         return originalFetch.apply(this, arguments).then(function(data) {
             let dataurl = data.url.toString();
-            if (dataurl.indexOf(url)) {
+            if (dataurl.includes(url) && dataurl.includes(q)) {
                const clone = data.clone();
                clone.json().then((response) => callback(response, data.url));
             }
@@ -37,7 +37,7 @@ function interceptFetch(url, callback) {
     };
 }
 
-    interceptFetch("torn.com", (response, url) => {
+    interceptFetch("torn.com","torn.com", (response, url) => {
      console.log("Found a fetch from: " + url);
      console.log(response);
     });
