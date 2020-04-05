@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Warbirds Warbase
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
-// @version      0.5
+// @version      0.5.1
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
@@ -33,7 +33,7 @@ function addWarInfo() {
         var href = $(this).children("a").attr("href");
         if (href == "#/") {
             let url = window.location.toString();
-            if (url.indexOf("war/")) {
+            if (url.includes("war/")) {
                 war_id = url.split("/").pop();
             }
         } else {
