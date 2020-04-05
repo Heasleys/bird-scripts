@@ -24,7 +24,7 @@
 
 
 function interceptFetch(url, callback) {
-    var originalFetch = festch;
+    var originalFetch = fetch;
     fetch = function() {
         return originalFetch.apply(this, arguments).then(function(data) {
             let dataurl = data.url.toString();
