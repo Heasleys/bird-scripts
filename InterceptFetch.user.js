@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Intercept Fetch
-// @namespace    https://github.com/Heasleys/bird-scripts/raw/master/InterceptFetch.user.js
+// @namespace    https://github.com/Heasleys/bird-scripts/blob/master/InterceptFetch.user.js
 // @version      1.0.1
 // @description  Different ways to intercept fetches/ajax requests on Torn
 // @author       Heasleys4hemp [1468764]
