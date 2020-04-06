@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Warbirds Warbase
-// @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
+// @namespace    https://github.com/Heasleys/bird-scripts/blob/master/warbase.user.js
 // @version      0.5.1
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
