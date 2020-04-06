@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Easter Egg Hunt: Random
 // @namespace    https://github.com/Heasleys/bird-scripts/blob/master/randomeasteregghunt.user.js
-// @version      1.0.3
+// @version      1.0.4
 // @description  Creates a link to a random page on Torn. Thanks Vulture!
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
