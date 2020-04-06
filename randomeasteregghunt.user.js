@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Easter Egg Hunt: Random
 // @namespace    https://github.com/Heasleys/bird-scripts/blob/master/randomeasteregghunt.user.js
-// @version      1.0.5
+// @version      1.0.6
 // @description  Creates a link to a random page on Torn. Thanks Vulture!
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
@@ -9,7 +9,8 @@
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/randomeasteregghunt.user.js
 // ==/UserScript==
 const linksarray = ["index.php","item.php","city.php","jobs.php","gym.php","properties.php","education.php","crimes.php","loader.php?sid=missions","newspaper.php","jailview.php","hospitalview.php","casino.php","forums.php","halloffame.php","factions.php","bringafriend.php","competition.php","friendlist.php","blacklist.php","messages.php","events.php","awards.php","points.php","rules.php","staff.php","credits.php","citystats.php","committee.php","bank.php","donator.php","stockexchange.php","fans.php","museum.php","loader.php?sid=racing","church.php","dump.php","loan.php","travelagency.php","amarket.php","bigalgunshop.php","shops.php?step=bitsnbobs","shops.php?step=cyberforce","shops.php?step=docks","shops.php?step=jewelry","shops.php?step=nikeh","shops.php?step=pawnshop","shops.php?step=pharmacy","pmarket.php","shops.php?step=postoffice","shops.php?step=super","shops.php?step=candy","shops.php?step=clothes","imarket.php","estateagents.php","bazaar.php","calendar.php","token_shop.php","freebies.php","comics.php","joblist.php","newspaper_class.php","personals.php","chronicles.php","pc.php","bounties.php","trade.php","sendcash.php","usersonline.php","profiles.php?XID="];
-window.addEventListener('load', function() {
+
+
     'use strict';
     
     let easterspans = `
@@ -29,7 +30,7 @@ window.addEventListener('load', function() {
     $("#nav-home").before(randomLink);
 
     animateElement($('#easterrandom'));
-});
+
 
 function getRandomLink() {
 let randomLink = linksarray[Math.floor(Math.random() * linksarray.length)];
