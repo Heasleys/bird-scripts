@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Warbirds Warbase
-// @namespace    https://github.com/Heasleys/bird-scripts/blob/master/warbase.user.js
-// @version      0.5.1
+// @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
+// @version      1.0.0
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
@@ -65,20 +65,25 @@ function interceptFetch(url,q, callback) {
             if (index == 0) {return;}
             var time = "";
             var seconds = 0;
+            $("span#"+value.key).css('color', 'black');
 
-            if ((value.myFaction.membersQuantity - value.enemyFaction.membersQuantity) > 0) {
-                seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
-                var numdays = Math.floor((seconds % 31536000) / 86400);
-                var numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
-                var numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
-                var numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
-                if (numdays > 0) {time+=numdays + " days "; numseconds = 0;}
-                if (numhours > 0) {time+=numhours + " hours "}
-                if (numminutes > 0) {time+=numminutes + " minutes "}
-                if (numseconds > 0) {time+=numseconds + " seconds"}
-            } else {time = "Never";}
+            if (value.isMyAttack == true) {
 
+                if ((value.myFaction.membersQuantity - value.enemyFaction.membersQuantity) > 0) {
+                    seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
+                    time = secondsToText(seconds);
+                    $("span#"+value.key).css('color', '#6ca236');
+                } else {time = "Never";}
 
+            } else {
+
+                if ((value.enemyFaction.membersQuantity - value.myFaction.membersQuantity) > 0) {
+                    seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
+                    time = secondsToText(seconds);
+                    $("span#"+value.key).css('color', '#e54c19');
+                } else {time = "Never";}
+
+            }
 
             $("span#"+value.key).text(time);
         });
@@ -87,3 +92,17 @@ function interceptFetch(url,q, callback) {
 
 
 }, false);
+
+function secondsToText(seconds) {
+    let time = "";
+    let numdays = Math.floor((seconds % 31536000) / 86400);
+    let numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+    let numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+    let numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+    if (numdays > 0) {time+=numdays + " days "; numseconds = 0;}
+    if (numhours > 0) {time+=numhours + " hours "}
+    if (numminutes > 0) {time+=numminutes + " minutes "}
+    if (numseconds > 0) {time+=numseconds + " seconds"}
+
+    return time;
+}
