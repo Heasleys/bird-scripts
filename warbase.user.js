@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Warbirds Warbase
 // @namespace    https://github.com/Heasleys/bird-scripts/raw/master/warbase.user.js
-// @version      1.0.0
+// @version      1.0.1
 // @description  Adds time to claim for territories, attack links in new tab, removes animation because it lags my chromebook
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=your*
@@ -78,7 +78,7 @@ function interceptFetch(url,q, callback) {
             } else {
 
                 if ((value.enemyFaction.membersQuantity - value.myFaction.membersQuantity) > 0) {
-                    seconds = Math.round((value.maxPoints - value.score) / (value.myFaction.membersQuantity - value.enemyFaction.membersQuantity));
+                    seconds = Math.round((value.maxPoints - value.score) / (value.enemyFaction.membersQuantity - value.myFaction.membersQuantity));
                     time = secondsToText(seconds);
                     $("span#"+value.key).css('color', '#e54c19');
                 } else {time = "Never";}
