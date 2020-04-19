@@ -1,14 +1,17 @@
 // ==UserScript==
 // @name         Total Joins
 // @namespace    Heasleys.totaljoins
-// @version      0.4
+// @version      0.5
 // @description  Count total joins and clears for wall wars
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/war.php*
 // @grant        none
-// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/total-joins.user.js
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/war-reports.user.js
 // ==/UserScript==
-
+//REDUNDANT USERSCRIPT
+//PLEASE USE NEW SCRIPT
+//  https://github.com/Heasleys/bird-scripts/raw/master/war-reports.user.js
+//
     function countFriendly() {
         var totaljoins = 0;
         var totalclears = 0;
@@ -68,5 +71,5 @@
         $("span.enemy").text(title);
     }
 
-    countFriendly();
-    countEnemy();
+    //countFriendly();
+    //countEnemy();
