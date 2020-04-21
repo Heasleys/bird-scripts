@@ -11,7 +11,7 @@
 (function() {
     'use strict';
 GM_addStyle(`
-    .d .faction-info-wrap.another-faction .f-war-list .title>li.member-icons, .d .faction-info-wrap.another-faction .f-war-list .member-list.info-members>li .member-icons {
+.d .faction-info-wrap.another-faction .f-war-list .title>li.member-icons, .d .faction-info-wrap.another-faction .f-war-list .member-list.info-members>li .member-icons {
     width: 203px !important;
 }
 
