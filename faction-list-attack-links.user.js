@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Faction List Attack Links
 // @namespace    Heasleys4hemp.attackLinks
-// @version      1.0.1
-// @description  Adds attack links to faction list
+// @version      1.0.2
+// @description  Adds attack links to faction lists
 // @author       Heasleys4hemp [1468764]
-// @match        https://www.torn.com/factions.php?step=profile&*ID=*
+// @match        https://www.torn.com/factions.php?step=profile&ID=*
 // @grant        GM_addStyle
 // ==/UserScript==
 
@@ -18,6 +18,16 @@ GM_addStyle(`
 .d .faction-info-wrap.another-faction .f-war-list .title>li.act {
     display: block !important;
     padding-left: 5px !important;
+}
+.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .user-icons {
+    width: 256px;
+}
+.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack {
+    display: block !important;
+}
+
+.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack {
+    display: block !important;
 }
 `);
 
