@@ -2,7 +2,7 @@
 // @name         Faction Territories
 // @namespace    Heasleys.factionterritories
 // @version      1.0.0
-// @description  faction territory list search
+// @description  Search map for factions or territories and add to favorites - API required for faction search
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
 // @grant        GM_addStyle
