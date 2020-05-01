@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Territories
 // @namespace    Heasleys.factionterritories
-// @version      1.0.0
+// @version      1.0.1
 // @description  Search map for factions or territories and add to favorites
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
@@ -193,8 +193,13 @@ $(window).load(function(){
 
     var observer = new MutationObserver(function(mutations) {
         if (document.contains(document.querySelector('.territory-dialogue-wrap'))) {
-            if ($('#wb_fav').length) {}else{
-                modifyLeaflet();
+            if ($('div.territory-dialogue-wrap > div.title.assaulter > a[href*="/war/"]').length > 0) {
+                $('div.title.assaulter:contains("Loading...")').parent().find("li > span.bold:contains('Name:')").removeClass('bold');
+                $('div.territory-dialogue-wrap > div.title.assaulter > a[href*="/war/"]').attr("href","");
+            } else {
+                if ($('#wb_mod').length > 0) {} else{
+                    modifyLeaflet();
+                }
             }
         }
     });
@@ -279,42 +284,46 @@ function getAPI() {
 }//end function
 
 function modifyLeaflet() {
-    let a = $('.territory-dialogue-wrap').find('div.title > a.text-blue.c-pointer');
-    let href = a.attr('href');
-    let fname = a.text();
-    let fid = href.split("=").pop();
-    fid = fid.toString();
-
-    let terr = $( "ul.territory-info-wrap" ).find("li > span:contains('Name:')");
+    //always modify
+    let terr = $( "ul.territory-info-wrap" ).find("li > span.bold:contains('Name:')");
     let terrName = terr.parent().text().split("Name:").join("");
     terrName = $.trim(terrName);
-    terr.parent().html("<span class='bold'>Name: </span><a href='https://www.torn.com/city.php#terrName=" + terrName + "'>" + terrName + "</a>");
-
-    $('ul.territory-info-wrap').append('<li id="wb_fav"><span class="bold">Toggle favorite:</span><button class="option-equip wai-btn wb_fav_button" id="favbutton"></button></li>');
-
-     $.each(favoriteslist, function(ind, ele) {
-         if (fid == ind) {
-             $('#favbutton').addClass("wb_fav_button_faved");
-             return false;
-         }
-     });
+    terr.parent().html("<span class='bold'>Name: </span><a href='https://www.torn.com/city.php#terrName=" + terrName + "' id='wb_mod'>" + terrName + "</a>");
 
 
-    $('#favbutton').click(function() {
+    if ($('div.territory-dialogue-wrap > div.title:contains("Unclaimed Territory")').length > 0 || $('div.territory-dialogue-wrap > div.title.defender').length > 0){
+    //do not modify further if unclaimed or in war
+    }else {
+      //add fav button for leaflet
+
+        let a = $('.territory-dialogue-wrap').find('div.title > a.text-blue.c-pointer');
+        let href = a.attr('href');
+        let fname = a.text();
+        let fid = href.split("=").pop();
+        fid = fid.toString();
+
+        $('ul.territory-info-wrap').append('<li><span class="bold">Toggle favorite:</span><button class="option-equip wai-btn wb_fav_button" id="favbutton"></button></li>');
+
+        $.each(favoriteslist, function(ind, ele) {
+            if (fid == ind) {
+                $('#favbutton').addClass("wb_fav_button_faved");
+                return false;
+            }
+        });
 
 
-        //check if id is in array
-        if (favoriteslist[fid]) {
-            delete favoriteslist[fid];
-        }else{
-            favoriteslist[fid] = fname;
-        }
-        $(this).toggleClass("wb_fav_button_faved");
-        recreateFavList();
-        localStorage.setItem("wb_fav_factionlist", JSON.stringify(favoriteslist));
-    });
+        $('#favbutton').click(function() {
+            if (favoriteslist[fid]) {
+                delete favoriteslist[fid];
+            }else{
+                favoriteslist[fid] = fname;
+            }
+            $(this).toggleClass("wb_fav_button_faved");
+            recreateFavList();
+            localStorage.setItem("wb_fav_factionlist", JSON.stringify(favoriteslist));
+        });
 
-
+    }//else unclaimed/war
 }
 
 function recreateFavList() {
