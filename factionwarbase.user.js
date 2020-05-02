@@ -11,7 +11,7 @@
 var warreports = JSON.parse(localStorage.getItem('wb_war_reports')) || {};
 var CHAIN_LIMIT = localStorage.getItem('wb_war_reports_chain_limit') || '100';
 var faction = '';
-var styles = `div.wb_container{margin-top:10px;display:flex;flex-direction:column}div.wb_head{border-bottom:none;border-radius:5px 5px 5px 5px;box-shadow:rgba(0,0,0,.25) 0 1px 3px;padding:6px 10px;background-color:#cab900;background-image:linear-gradient(90deg,transparent 50%,rgba(0,0,0,.07) 0);background-size:4px;cursor:pointer}div.wb_head.expanded{border-bottom:none;border-radius:5px 5px 0 0}span.wb_title{color:#fff;font-size:13px;letter-spacing:1px;text-shadow:rgba(0,0,0,.65) 1px 1px 2px;font-weight:700;line-height:16px}.wb_content{background-color:#f2f2f2;border:1px solid rgba(0,0,0,.5);border-radius:0 0 5px 5px;border-top:none}.wb_row{display:flex;margin:.75em;justify-content:space-between}.wb_col{margin-left:20px;margin-right:20px}.wb_col>p{font-weight:700;font-size:16px;border-bottom:1px solid #363636;margin-bottom:3px;padding-bottom:2px}.wb_col input{vertical-align:middle}.wb_button{text-shadow:rgba(0,0,0,.65) 1px 1px 2px;cursor:pointer;font-weight:400;text-transform:none;position:relative;text-align:center;line-height:1.2;color:#fff;margin-left:.5em;-webkit-appearance:none;font-size:14px;background-color:rgba(255,255,255,.15);box-shadow:rgba(255,255,255,.5) 0 1px 1px 0 inset,rgba(0,0,0,.25) 0 1px 1px 1px;padding:2px 10px;border-radius:4px;border-width:initial;border-style:none;border-color:initial;border-image:initial;text-decoration:none}.float-right{float:right}span.wb_icon{align-items:center;justify-content:center;width:16px;float:right}span.wb_icon svg{display:block;height:16px;fill:#fff;cursor:pointer;margin-left:auto;margin-right:auto}.wb_input{width:118px;height:23px;border-radius:5px;border:1px solid rgba(0,0,0,.5);padding:0 4px 0 10px}.d .f-war-list.war-new .row-animation.to-right{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation.to-left{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation{background-image:none!important;background-position:0 0!important;background-repeat:no-repeat!important}.d .faction-info-wrap.another-faction .f-war-list .member-list.info-members>li .member-icons,.d .faction-info-wrap.another-faction .f-war-list .title>li.member-icons{width:203px!important}.d .faction-info-wrap.another-faction .f-war-list .title>li.act{display:block!important;padding-left:5px!important}.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .user-icons{width:256px}.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack{display:block!important}.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack{display:block!important}`;
+var styles = `div.wb_container{margin-top:10px;display:flex;flex-direction:column}div.wb_head{border-bottom:none;border-radius:5px 5px 5px 5px;box-shadow:rgba(0,0,0,.25) 0 1px 3px;padding:6px 10px;background-color:#cab900;background-image:linear-gradient(90deg,transparent 50%,rgba(0,0,0,.07) 0);background-size:4px;cursor:pointer}div.wb_head.expanded{border-bottom:none;border-radius:5px 5px 0 0}span.wb_title{color:#fff;font-size:13px;letter-spacing:1px;text-shadow:rgba(0,0,0,.65) 1px 1px 2px;font-weight:700;line-height:16px}.wb_content{background-color:#f2f2f2;border:1px solid rgba(0,0,0,.5);border-radius:0 0 5px 5px;border-top:none}.wb_row{display:flex;margin:.75em;justify-content:space-between}.wb_col{margin-left:20px;margin-right:20px}.wb_col>p{font-weight:700;font-size:16px;border-bottom:1px solid #363636;margin-bottom:3px;padding-bottom:2px}.wb_col input{vertical-align:middle}.wb_button{text-shadow:rgba(0,0,0,.65) 1px 1px 2px;cursor:pointer;font-weight:400;text-transform:none;position:relative;text-align:center;line-height:1.2;color:#fff;margin-left:.5em;-webkit-appearance:none;font-size:14px;background-color:rgba(255,255,255,.15);box-shadow:rgba(255,255,255,.5) 0 1px 1px 0 inset,rgba(0,0,0,.25) 0 1px 1px 1px;padding:2px 10px;border-radius:4px;border-width:initial;border-style:none;border-color:initial;border-image:initial;text-decoration:none}.float-right{float:right}span.wb_icon{align-items:center;justify-content:center;width:16px;float:right}span.wb_icon svg{display:block;height:16px;fill:#fff;cursor:pointer;margin-left:auto;margin-right:auto}.wb_input{width:118px;height:23px;border-radius:5px;border:1px solid rgba(0,0,0,.5);padding:0 4px 0 10px}.d .f-war-list.war-new .row-animation.to-right{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation.to-left{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation{background-image:none!important;background-position:0 0!important;background-repeat:no-repeat!important}`;
 // ^ minified version of below v
 /*
 div.wb_container {
@@ -125,25 +125,6 @@ animation: none !important;
 background-image: none !important;
 background-position: 0px 0px !important;
 background-repeat: no-repeat !important;
-//add attack links to faction page
-.d .faction-info-wrap .f-war-list .title>li.member-icons, .d .faction-info-wrap .f-war-list .member-list.info-members>li .member-icons {
-width: 203px !important;
-}
-.d .faction-info-wrap.another-faction .f-war-list .title>li.member-icons, .d .faction-info-wrap.another-faction .f-war-list .member-list.info-members>li .member-icons {
-width: 203px !important;
-}
-.d .faction-info-wrap.another-faction .f-war-list .title>li.act {
-display: block !important;
-padding-left: 5px !important;
-}
-.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .user-icons {
-width: 256px;
-}
-.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack {
-display: block !important;
-}
-.d .f-war-list.war-new .faction-war .tab-menu-cont .members-cont.profile-mode .attack {
-display: block !important;
 }
 */
 
@@ -360,21 +341,3 @@ window.addEventListener('load', function() {
 
     }
 }, false);
-
-(function() {
-    'use strict';
-    //ADD ATTACK LINKS TO FACTION PAGE
-    $("ul.title.title-black.top-round > li.act").text("Attack");
-    $("ul.member-list.info-members").children("li").each(function() {
-
-        var href = $(this).find("a.user.name").attr("href");
-        var href_id = href.split("=").pop();
-
-        let attack_element = $(`<div class="act-cont" style="display: block;">
-<a href="/loader.php?sid=attack&user2ID=` + href_id + `" class="attack t-blue h">Attack</a>
-</div>`);
-
-        $(this).children("div.member.icons").after(attack_element);
-
-    });
-})();
