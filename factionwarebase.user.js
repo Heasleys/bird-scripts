@@ -284,7 +284,7 @@ window.addEventListener('load', function() {
 
         $(".wb_head").click(function() {
             $(this).toggleClass("expanded");
-            $(".wb_content").slideToggle("slow");
+            $(".wb_content").slideToggle("fast");
 
             if (!$("#wb_svg_right").is(':visible')) {
                 $("#wb_svg_right").attr("hidden",false);
