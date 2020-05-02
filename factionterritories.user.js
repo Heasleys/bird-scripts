@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Territories
 // @namespace    Heasleys.factionterritories
-// @version      1.0.1
+// @version      1.0.2
 // @description  Search map for factions or territories and add to favorites
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/city.php*
@@ -193,9 +193,9 @@ $(window).load(function(){
 
     var observer = new MutationObserver(function(mutations) {
         if (document.contains(document.querySelector('.territory-dialogue-wrap'))) {
-            if ($('div.territory-dialogue-wrap > div.title.assaulter > a[href*="/war/"]').length > 0) {
+            if ($('div.territory-dialogue-wrap > div.title.assaulter > a:contains("Loading...")').length > 0) {
                 $('div.title.assaulter:contains("Loading...")').parent().find("li > span.bold:contains('Name:')").removeClass('bold');
-                $('div.territory-dialogue-wrap > div.title.assaulter > a[href*="/war/"]').attr("href","");
+                $('div.territory-dialogue-wrap > div.title.assaulter > a:contains("Loading...")').text('Loading . . .');
             } else {
                 if ($('#wb_mod').length > 0) {} else{
                     modifyLeaflet();
