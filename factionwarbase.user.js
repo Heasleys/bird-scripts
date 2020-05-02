@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.0.3
+// @version      1.0.4
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -253,9 +253,12 @@ window.addEventListener('load', function() {
 
 
     function updateSelects() {
-        let chainstring = "";
-        let wallstring = "";
-        let raidstring = "";
+        let chainstring = "<option selected></option>";
+        let wallstring = "<option selected></option>";
+        let raidstring = "<option selected></option>";
+        $("#war_chains").empty();
+        $("#war_walls").empty();
+        $("#war_raids").empty();
         if (warreports[faction]) {
             if (Object.keys( warreports[faction].factionChains ).length > 0) {
                 $.when(
