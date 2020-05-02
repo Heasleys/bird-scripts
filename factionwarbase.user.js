@@ -265,7 +265,7 @@ window.addEventListener('load', function() {
 <hr class="delimiter-999 m-top10">
 <div class="wb_container">
 <div class="wb_head">
-<span class="wb_title">Warbase</span>
+<span class="wb_title">Faction Warbase</span>
 <span class="wb_icon" id="wb_svg_right"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 32"><path d="M4 6l-4 4 6 6-6 6 4 4 10-10L4 6z"></path></svg></span><span class="wb_toggle wb_icon" id="wb_svg_down" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 32"><path d="M16 10l-6 6-6-6-4 4 10 10 10-10-4-4z"></path></svg></span></div>
 <div class="wb_content" hidden>
 <div class="wb_row">
