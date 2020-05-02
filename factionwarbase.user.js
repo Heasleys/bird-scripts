@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.0.4
+// @version      1.0.5
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
