@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.0
+// @version      1.0.1
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -272,6 +272,10 @@ window.addEventListener('load', function() {
 <div class="wb_col">
 <p>Faction Chains</p>
 <select class="wb_input" id="war_chains"><option selected></option></select>
+</div>
+<div class="wb_col">
+<p>Info</p>
+<span >Chains in cooldown are available immediately. Otherwise, chain/war IDs are saved for later viewing.</span>
 </div>
 <div class="wb_col">
 <p>Faction Walls</p>
