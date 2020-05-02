@@ -190,8 +190,19 @@ window.addEventListener('load', function() {
             warreports[fid] = {
                 'factionID' : fid,
                 'factionChains' : {},
-                'factionWalls' : {}
+                'factionWalls' : {},
+                'factionRaids' : {}
             };
+        } else {
+            if (!warreports[fid]['factionChains']) {
+                warreports[fid]['factionChains'] = {};
+            }
+            if (!warreports[fid]['factionWalls']) {
+                warreports[fid]['factionWalls'] = {};
+            }
+            if (!warreports[fid]['factionRaids']) {
+                warreports[fid]['factionRaids'] = {};
+            }
         }
 
         if (wardata.wars[0].data.chain.ID && wardata.wars[0].data.chain.chain >= CHAIN_LIMIT) {
@@ -219,6 +230,18 @@ window.addEventListener('load', function() {
                         }
                     }
                 }
+                if (wardata.wars[i].ID) {
+                    let raidID = wardata.wars[i].ID;
+                    if (!warreports[fid]['factionRaids'][raidID]) {
+                        warreports[fid]['factionRaids'][raidID] = {
+                            'raidID' : raidID,
+                            'raidLink' : '/war.php?step=raidreport&raidID='+raidID,
+                            'enemyID' : wardata.wars[i].enemyFaction.ID,
+                            'enemyName' : wardata.wars[i].enemyFaction.factionName,
+                            'startDate' : (wardata.wars[i].start * 1000)
+                        }
+                    }
+                }
             }
         }
 
@@ -234,6 +257,7 @@ window.addEventListener('load', function() {
     function updateSelects() {
         let chainstring = "";
         let wallstring = "";
+        let raidstring = "";
         if (warreports[faction]) {
             if (Object.keys( warreports[faction].factionChains ).length > 0) {
                 $.when(
@@ -244,7 +268,6 @@ window.addEventListener('load', function() {
                 ).then(function() {
                     $("#war_chains").append(chainstring);
                 });
-
             }
             if (Object.keys( warreports[faction].factionWalls ).length > 0) {
                 $.when(
@@ -255,7 +278,16 @@ window.addEventListener('load', function() {
                 ).then(function() {
                     $("#war_walls").append(wallstring);
                 });
-
+            }
+            if (warreports[faction]['factionRaids'] && Object.keys( warreports[faction].factionRaids ).length > 0) {
+                $.when(
+                    $.each(warreports[faction].factionRaids, function(index,element) {
+                        let date = new Date(element.startDate).toDateString();
+                        raidstring += '<option value="'+index+'" data-href="'+element.raidLink+'">['+index+'] '+date+' vs. '+element.enemyName+'['+element.enemyID+']</option>';
+                    })
+                ).then(function() {
+                    $("#war_raids").append(raidstring);
+                });
             }
         }
     }
@@ -270,16 +302,20 @@ window.addEventListener('load', function() {
 <div class="wb_content" hidden>
 <div class="wb_row">
 <div class="wb_col">
-<p>Faction Chains</p>
-<select class="wb_input" id="war_chains"><option selected></option></select>
-</div>
-<div class="wb_col">
 <p>Info</p>
 <span >Chains in cooldown are available immediately. Otherwise, chain/war IDs are saved for later viewing.</span>
 </div>
 <div class="wb_col">
+<p>Faction Chains</p>
+<select class="wb_input" id="war_chains"><option selected></option></select>
+</div>
+<div class="wb_col">
 <p>Faction Walls</p>
 <select class="wb_input" id="war_walls"><option selected></option></select>
+</div>
+<div class="wb_col">
+<p>Faction Raids</p>
+<select class="wb_input" id="war_raids"><option selected></option></select>
 </div>
 </div>
 </div>
@@ -307,6 +343,13 @@ window.addEventListener('load', function() {
         });
 
         $("#war_walls").change(function(){
+            if ($('option:selected', this).data('href')) {
+                let href = $('option:selected', this).data('href');
+                window.open(href, '_blank');
+            }
+        });
+
+        $("#war_raids").change(function(){
             if ($('option:selected', this).data('href')) {
                 let href = $('option:selected', this).data('href');
                 window.open(href, '_blank');
