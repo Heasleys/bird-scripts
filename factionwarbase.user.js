@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.0.1
+// @version      1.0.3
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -181,7 +181,6 @@ window.addEventListener('load', function() {
 
     interceptFetch("faction_wars.php","step=getwardata", (response, url) => {
         const wardata = response;
-
         let tempreports = JSON.parse(JSON.stringify(warreports));
 
         let fid = wardata.factionID;
@@ -205,19 +204,18 @@ window.addEventListener('load', function() {
             }
         }
 
-        if (wardata.wars[0].data.chain.ID && wardata.wars[0].data.chain.chain >= CHAIN_LIMIT) {
-            let chainID = wardata.wars[0].data.chain.ID;
-            if (!warreports[fid]['factionChains'][chainID]) {
-                warreports[fid]['factionChains'][chainID] = {
-                    'chainID' : chainID,
-                    'chainLink' : '/war.php?step=chainreport&chainID='+chainID,
-                    'startDate' : wardata.wars[0].data.chain.start
+        if (Object.keys( wardata.wars ).length > 0) {
+            for (let i = 0; i < Object.keys(wardata.wars).length; i++) {
+                if (wardata.wars[i].data && wardata.wars[i].data.chain && wardata.wars[i].data.chain.ID && wardata.wars[i].data.chain.chain >= CHAIN_LIMIT) {
+                    let chainID = wardata.wars[0].data.chain.ID;
+                    if (!warreports[fid]['factionChains'][chainID]) {
+                        warreports[fid]['factionChains'][chainID] = {
+                            'chainID' : chainID,
+                            'chainLink' : '/war.php?step=chainreport&chainID='+chainID,
+                            'startDate' : wardata.wars[0].data.chain.start
+                        }
+                    }
                 }
-            }
-        }
-
-        if (Object.keys( wardata.wars ).length > 1) {
-            for (let i = 1; i < Object.keys(wardata.wars).length; i++) {
                 if (wardata.wars[i].warID) {
                     let wallID = wardata.wars[i].warID;
                     if (!warreports[fid]['factionWalls'][wallID]) {
