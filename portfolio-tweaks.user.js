@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Portfolio Tweaks
 // @namespace    Heasleys.portfoliotweaks
-// @version      0.1
+// @version      0.2
 // @description  Adds net change to stocks
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/stockexchange.php?step=portfolio
@@ -29,14 +29,14 @@
 
         let net = Math.floor(change * shares);
 
-        let new_tab = length_wrap.find('span.action');
+        let qualify_wrap = info_tab.find('div.qualify-wrap');
+
         if (dir == '-') {dirclass = 'bold change down';}
         if (dir == '+') {dirclass = 'bold change up';}
 
         let netFormatted = net.toLocaleString('en-US');
 
-        new_tab.append('<span class="bold">Net Change: </span>');
-        new_tab.append('<span class="'+dirclass+'">' + dir + '$' + netFormatted + '</span>');
+        qualify_wrap.append('<div style="float: right;"><span class="bold">Net Change: </span><span class="'+dirclass+'">' + dir + '$' + netFormatted + '</span></div>');
 
 
     });
