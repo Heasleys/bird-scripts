@@ -6,6 +6,7 @@
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/stockexchange.php?step=portfolio
 // @grant        none
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/portfolio-tweaks.user.js
 // ==/UserScript==
 
 (function() {
