@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.0.6
+// @version      1.1.0
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -11,122 +11,130 @@
 var warreports = JSON.parse(localStorage.getItem('wb_war_reports')) || {};
 var CHAIN_LIMIT = localStorage.getItem('wb_war_reports_chain_limit') || '100';
 var faction = '';
-var styles = `div.wb_container{margin-top:10px;display:flex;flex-direction:column}div.wb_head{border-bottom:none;border-radius:5px 5px 5px 5px;box-shadow:rgba(0,0,0,.25) 0 1px 3px;padding:6px 10px;background-color:#cab900;background-image:linear-gradient(90deg,transparent 50%,rgba(0,0,0,.07) 0);background-size:4px;cursor:pointer}div.wb_head.expanded{border-bottom:none;border-radius:5px 5px 0 0}span.wb_title{color:#fff;font-size:13px;letter-spacing:1px;text-shadow:rgba(0,0,0,.65) 1px 1px 2px;font-weight:700;line-height:16px}.wb_content{background-color:#f2f2f2;border:1px solid rgba(0,0,0,.5);border-radius:0 0 5px 5px;border-top:none}.wb_row{display:flex;margin:.75em;justify-content:space-between}.wb_col{margin-left:20px;margin-right:20px}.wb_col>p{font-weight:700;font-size:16px;border-bottom:1px solid #363636;margin-bottom:3px;padding-bottom:2px}.wb_col input{vertical-align:middle}.wb_button{text-shadow:rgba(0,0,0,.65) 1px 1px 2px;cursor:pointer;font-weight:400;text-transform:none;position:relative;text-align:center;line-height:1.2;color:#fff;margin-left:.5em;-webkit-appearance:none;font-size:14px;background-color:rgba(255,255,255,.15);box-shadow:rgba(255,255,255,.5) 0 1px 1px 0 inset,rgba(0,0,0,.25) 0 1px 1px 1px;padding:2px 10px;border-radius:4px;border-width:initial;border-style:none;border-color:initial;border-image:initial;text-decoration:none}.float-right{float:right}span.wb_icon{align-items:center;justify-content:center;width:16px;float:right}span.wb_icon svg{display:block;height:16px;fill:#fff;cursor:pointer;margin-left:auto;margin-right:auto}.wb_input{width:118px;height:23px;border-radius:5px;border:1px solid rgba(0,0,0,.5);padding:0 4px 0 10px}.d .f-war-list.war-new .row-animation.to-right{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation.to-left{-webkit-animation:none!important;animation:none!important}.d .f-war-list.war-new .row-animation{background-image:none!important;background-position:0 0!important;background-repeat:no-repeat!important}`;
-// ^ minified version of below v
-/*
+var styles = `
 div.wb_container {
-margin-top: 10px;
-display: flex;
-flex-direction: column;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 div.wb_head {
-border-bottom: none;
-border-radius: 5px 5px 5px 5px;
-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 3px;
-padding: 6px 10px;
-background-color: rgb(202, 185, 0);
-background-image: linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.07) 0px);
-background-size: 4px;
-cursor: pointer;
+    border-bottom: none;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 1px 3px;
+    padding: 6px 10px;
+    background-color: #cab900;
+    background-image: linear-gradient(90deg, transparent 50%, rgba(0, 0, 0, 0.07) 0);
+    background-size: 4px;
+    cursor: pointer;
 }
 div.wb_head.expanded {
-border-bottom: none;
-border-radius: 5px 5px 0px 0px;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
 }
 span.wb_title {
-color: #ffffff;
-font-size: 13px;
-letter-spacing: 1px;
-text-shadow: rgba(0, 0, 0, 0.65) 1px 1px 2px;
-font-weight: 700;
-line-height: 16px;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-shadow: rgba(0, 0, 0, 0.65) 1px 1px 2px;
+    font-weight: 700;
+    line-height: 16px;
 }
 .wb_content {
-background-color: #F2F2F2;
-border: 1px solid rgba(0, 0, 0, .5);
-border-radius: 0px 0px 5px 5px;
-border-top: none;
+    background-color: #f2f2f2;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 5px 5px;
+    border-top: none;
 }
 .wb_row {
-display: flex;
-margin: 0.75em;
-justify-content: space-between;
+    display: flex;
+    margin: 0.75em;
+    justify-content: space-between;
 }
 .wb_col {
-margin-left: 20px;
-margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .wb_col > p {
-font-weight: bold;
-font-size: 16px;
-border-bottom: 1px solid #363636;
-margin-bottom: 3px;
-padding-bottom: 2px;
+    font-weight: 700;
+    font-size: 16px;
+    border-bottom: 1px solid #363636;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
 }
 .wb_col input {
-vertical-align: middle;
+    vertical-align: middle;
 }
 .wb_button {
-text-shadow: rgba(0, 0, 0, 0.65) 1px 1px 2px;
-cursor: pointer;
-font-weight: 400;
-text-transform: none;
-position: relative;
-text-align: center;
-line-height: 1.2;
-color: rgb(255, 255, 255);
-margin-left: 0.5em;
--webkit-appearance: none;
-font-size: 14px;
-background-color: rgba(255, 255, 255, 0.15);
-box-shadow: rgba(255, 255, 255, 0.5) 0px 1px 1px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 1px 1px;
-padding: 2px 10px;
-border-radius: 4px;
-border-width: initial;
-border-style: none;
-border-color: initial;
-border-image: initial;
-text-decoration: none;
+    text-shadow: rgba(0, 0, 0, 0.65) 1px 1px 2px;
+    cursor: pointer;
+    font-weight: 400;
+    text-transform: none;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+    color: #fff;
+    margin-left: 0.5em;
+    -webkit-appearance: none;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px 0 inset, rgba(0, 0, 0, 0.25) 0 1px 1px 1px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    text-decoration: none;
 }
 .float-right {
-float: right;
+    float: right;
 }
 span.wb_icon {
-align-items: center;
-justify-content: center;
-width: 16px;
-float: right;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    float: right;
 }
 span.wb_icon svg {
-display: block;
-height: 16px;
-fill: white;
-cursor: pointer;
-margin-left: auto;
-margin-right: auto;
+    display: block;
+    height: 16px;
+    fill: #fff;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
 }
 .wb_input {
-width: 118px;
-height: 23px;
-border-radius: 5px;
-border: 1px solid rgba(0, 0, 0, .5);
-padding: 0 4px 0 10px;
+    width: 118px;
+    height: 23px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 0 4px 0 10px;
 }
-//remove animations on wall wars for less lag
 .d .f-war-list.war-new .row-animation.to-right {
--webkit-animation: none !important;
-animation: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
 }
 .d .f-war-list.war-new .row-animation.to-left {
--webkit-animation: none !important;
-animation: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
 }
 .d .f-war-list.war-new .row-animation {
-background-image: none !important;
-background-position: 0px 0px !important;
-background-repeat: no-repeat !important;
+    background-image: none !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
 }
-*/
+
+.wb-war-span {
+    padding-left: 11px;
+    padding-right: 5px;
+    color: #888;
+}
+
+.wb-war-info {
+    color: black;
+}
+`;
+
 
 var styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
@@ -161,6 +169,7 @@ window.addEventListener('load', function() {
 
 
     interceptFetch("faction_wars.php","step=getwardata", (response, url) => {
+        modifyWars(response);
         const wardata = response;
         let tempreports = JSON.parse(JSON.stringify(warreports));
 
@@ -274,6 +283,39 @@ window.addEventListener('load', function() {
         }
     }
 
+    function modifyWars(response) {
+
+        $.each(response.wars,function(index, value){
+
+            if (!value.type) {return};
+
+            if (value.type == "chain") {
+                let chainID = value.data.chain.ID;
+                let chainStart = parseInt(value.data.chain.start);
+                chainStart = (chainStart / 1000);
+                let time = (Math.round((Date.now()/1000)) - chainStart);
+                let readableTime = secondsToText(time);
+
+                let chainBox = $("div.chain-box").find("span.chain-box-title");
+                let text = "Chain active: " + readableTime;
+                chainBox.text(text);
+
+            }
+
+            if (value.type == "raid") {
+
+
+            }
+
+            if (value.type == "territory") {
+
+
+            }
+        });
+
+
+    }
+
     function insertHeader() {
         document.getElementById('war-react-root').insertAdjacentHTML('afterend', `
 <hr class="delimiter-999 m-top10">
@@ -338,6 +380,19 @@ window.addEventListener('load', function() {
             }
         });
 
+    }
 
+    function secondsToText(seconds) {
+        let time = "";
+        let numdays = Math.floor((seconds % 31536000) / 86400);
+        let numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+        let numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+        let numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+        if (numdays > 0) {time+=numdays + " days "; numseconds = 0;}
+        if (numhours > 0) {time+=numhours + " hours "}
+        if (numminutes > 0) {time+=numminutes + " minutes "}
+        if (numseconds > 0) {time+=numseconds + " seconds"}
+
+        return time;
     }
 }, false);
