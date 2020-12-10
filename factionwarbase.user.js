@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.2.0
+// @version      1.2.1
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -162,7 +162,7 @@ fill: black;
 `);
 
 
-window.addEventListener('load', function() {
+
 
     function interceptFetch(url,q, callback) {
         var originalFetch = unsafeWindow.fetch;
@@ -183,7 +183,7 @@ window.addEventListener('load', function() {
     var observer = new MutationObserver(function(mutations) {
 
         if (window.location.pathname == "/factions.php" && window.location.search.includes("?step=profile") ) {
-            if (document.contains(document.getElementById('war-react-root')) && document.contains(document.querySelector('.faction-info'))) {
+            if (document.contains(document.getElementById('react-root')) && document.contains(document.querySelector('.faction-info'))) {
                 observer.disconnect();
                 faction = $('div.faction-info').data('faction');
                 faction_name = $('div.faction-info').data('name');
@@ -390,7 +390,7 @@ window.addEventListener('load', function() {
     }
 
     function insertHeader() {
-        document.getElementById('war-react-root').insertAdjacentHTML('afterend', `
+        document.getElementById('react-root').insertAdjacentHTML('afterend', `
 <hr class="delimiter-999 m-top10">
 <div class="wb_container">
 <div class="wb_head">
@@ -567,4 +567,4 @@ window.addEventListener('load', function() {
 
         return time;
     }
-}, false);
+
