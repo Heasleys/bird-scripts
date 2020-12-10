@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.2.1
+// @version      1.2.2
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -209,7 +209,7 @@ fill: black;
         const wardata = response;
         let tempreports = JSON.parse(JSON.stringify(warreports));
 
-        let fid = wardata.factionID;
+        let fid = faction;
 
         if (!warreports[fid]) {
             warreports[fid] = {
