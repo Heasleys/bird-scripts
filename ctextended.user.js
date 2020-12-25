@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.0
+// @version      1.1
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -29,8 +29,8 @@ $(window).load(function () {
 
     statuscontainer.hide();
     usermap.css({"width": "100%","height": "100%"});
-    var mapwidth = usermap.width();
-    var mapheight = usermap.height();
+    var mapwidth = statuscontainer.width();
+    var mapheight = statuscontainer.height();
 
     mapoverview.css({"width": "100%","height": mapheight});
     buttonmap.css({"width": "100%","height": mapheight});
