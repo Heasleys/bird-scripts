@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.2.2
+// @version      1.2.3
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -368,10 +368,10 @@ fill: black;
             url: url,
             type: "GET",
             processData: false,
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-            }
+            headers: {
+                "Accept": "text/html",
+            },
+            onload: (response) => console.log(response.response),
         });
     }
 
