@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Birds of War
 // @namespace    Heasleys.birdsofwar
-// @version      0.3.2
+// @version      0.3.3
 // @description  Bird script for real wars - ping for assistance or revives
 // @author       Heasleys4hemp ]1468764]
 // @match        https://www.torn.com/*
@@ -69,7 +69,7 @@ let styles = `
     text-transform: uppercase;
 }
 
-.wb-sidebar-link.success {
+.wb-sidebar-link.success, .wb-sidebar-link-mobile.success {
     color: #798c3d;
     font-size: 11px;
     padding-left: 5px;
@@ -85,7 +85,7 @@ let styles = `
     text-transform: uppercase;
 }
 
-.wb-sidebar-link.fail {
+.wb-sidebar-link.fail, .wb-sidebar-link-mobile.fail {
     color: #c30;
     font-size: 11px;
     padding-left: 5px;
@@ -146,18 +146,32 @@ header.wb-sidebar-header {
     border-radius: 5px;
     cursor: pointer;
     background-color: rgb(228, 228, 228);
-    margin-top: 1px;
-    margin-left: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
     color: rgb(51, 51, 51);
-    line-height: 23px;
+    line-height: 15px;
     display: block;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-bottom: 1px solid rgb(255, 255, 255);
     text-decoration: none;
     overflow: hidden;
-    padding: 0px 10px;
-    width: 20%;
+    padding: 0px 5px;
+    width: 15%;
+}
+
+.wb-mobile-content {
+    text-align: center;
+    background: transparent;
+}
+
+.wb-sidebar-link-mobile.success {
+    width: 100%;
+}
+
+.wb-sidebar-link-mobile.fail {
+    width: 100%;
 }
 
 `;
@@ -171,7 +185,7 @@ $(document).ready(function() {
     var assistElement = $('<div class="wb_attack_content"><button id="attackRequest" class="wb-attack-request-button" type="button" value="attack">Request Assistance</button><span class="wb-attack-span success" hidden></span></div>');
     var reviveElement = $('<div><header class="wb-sidebar-header"><span>Birds of War</span></header><button id="reviveRequest" class="wb-sidebar-link" type="button" value="revive">Request Revive</button></div>');
 
-    var reviveMobileElement = $('<div><form id="reviveRequest"><input class="wb-sidebar-link-mobile" type="submit" value="Revive"></form></div>'); //broken
+    var reviveMobileElement = $('<div class="wb-mobile-content"><button id="reviveRequest" class="wb-sidebar-link-mobile" type="button" value="revive">Revive</button></div>'); //broken
 
 
 
@@ -191,9 +205,9 @@ $(document).ready(function() {
             }
         } else {
             //if not attack window, add revive sidebar
-            if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-                if (document.contains(document.querySelector('div.user-information-mobile___2RodB'))) {
-                    $('.user-information-mobile___2RodB').first().after(reviveMobileElement);
+            if ( $(window).width() <= 600 ) {
+                if (document.contains(document.querySelector('div.sidebar___2QBxB'))) {
+                    $('.sidebar___2QBxB').first().after(reviveMobileElement);
                     observer.disconnect();
                 }
             }
