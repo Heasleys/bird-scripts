@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Birds of War
 // @namespace    Heasleys.birdsofwar
-// @version      0.3.1
+// @version      0.3.2
 // @description  Bird script for real wars - ping for assistance or revives
 // @author       Heasleys4hemp ]1468764]
 // @match        https://www.torn.com/*
@@ -191,16 +191,17 @@ $(document).ready(function() {
             }
         } else {
             //if not attack window, add revive sidebar
-            if (document.contains(document.querySelector('div.sidebar-block___181mP'))) {
-
-                if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                if (document.contains(document.querySelector('div.user-information-mobile___2RodB'))) {
                     $('.user-information-mobile___2RodB').first().after(reviveMobileElement);
                     observer.disconnect();
-                } else {
+                }
+            }
+            else {
+                if (document.contains(document.querySelector('div.sidebar-block___181mP'))) {
                     $('div.sidebar-block___181mP').first().after(reviveElement);
                     observer.disconnect();
                 }
-
             }
         }
 
