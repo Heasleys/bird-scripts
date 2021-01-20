@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Birds of War
 // @namespace    Heasleys.birdsofwar
-// @version      0.3.3
+// @version      0.3.4
 // @description  Bird script for real wars - ping for assistance or revives
 // @author       Heasleys4hemp ]1468764]
 // @match        https://www.torn.com/*
@@ -29,6 +29,7 @@ let styles = `
     padding-top: 4px;
     padding-bottom: 4px;
     text-align: center;
+    box-shadow: 0 0 0 3px rgb(202, 185, 0);
 }
 
 
@@ -159,6 +160,7 @@ header.wb-sidebar-header {
     overflow: hidden;
     padding: 0px 5px;
     width: 15%;
+    box-shadow: 0 0 0 3px rgb(202, 185, 0);
 }
 
 .wb-mobile-content {
