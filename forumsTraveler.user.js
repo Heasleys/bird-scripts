@@ -75,7 +75,7 @@ var wb_header = `
     var url = window.location.toString();
     var forum_id = url.split("=").pop();
 
-    $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
+    $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
 
 
     window.addEventListener('hashchange',()=>{
@@ -86,7 +86,7 @@ var wb_header = `
             forum_id = url.split("=").pop();
             if ($('#wb_buttons').length == 0) {
 
-                $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
+                $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
 
             } else {
 
