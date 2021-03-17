@@ -6,6 +6,7 @@
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/forums.php*
 // @grant        GM_addStyle
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/forumsTraveler.user.js
 // ==/UserScript==
 
 GM_addStyle(`
