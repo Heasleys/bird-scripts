@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Forum Traveler
 // @namespace    Heasleys.ForumsTraveler
-// @version      0.1
+// @version      0.1.1
 // @description  Traverse through all forums by forum id
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/forums.php*
@@ -73,9 +73,15 @@ var wb_header = `
     'use strict';
     $('.content-wrapper').before(wb_header);
     var url = window.location.toString();
-    var forum_id = url.split("=").pop();
+    var forums = url.split("&");
+            console.log(forums);
+    for (let i = 0; i < forums.length; i++) {
+       if (forums[i].includes("t=")) {
+           var forum_id = forums[i].replace("t=", "");
+       }
+    }
 
-    $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
+    $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
 
 
     window.addEventListener('hashchange',()=>{
@@ -83,10 +89,16 @@ var wb_header = `
         console.log(url);
 
         if (url.includes('&t=')) {
-            forum_id = url.split("=").pop();
+            var forums = url.split("&");
+            console.log(forums);
+            for (let i = 0; i < forums.length; i++) {
+                if (forums[i].includes("t=")) {
+                    var forum_id = forums[i].replace("t=", "");
+                }
+            }
             if ($('#wb_buttons').length == 0) {
 
-                $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=2&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
+                $('.wb_title').append('<span id="wb_buttons" class="float-right"><a id="b1" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)-1) +'">Forum: ' + (Number(forum_id)-1) + '</a><a id="b2" class="wb_button" href="https://www.torn.com/forums.php#/p=threads&f=44&t='+ (Number(forum_id)+1) +'">Forum: ' + (Number(forum_id)+1) + '</a></span>');
 
             } else {
 
