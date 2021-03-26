@@ -253,7 +253,7 @@ fill: black;
                             'startDate' : wardata.wars[0].data.chain.start
                         }
 
-                        uploadChainID(fid, chainID);
+                        uploadChainID(fid, chainID); //Automatically upload chain id to warbirds.rocks when it finds a new chain
                     }
                 }
                 if (wardata.wars[i].warID) {
