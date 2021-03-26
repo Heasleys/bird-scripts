@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.2.3
+// @version      1.2.4
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -12,16 +12,17 @@
 // @connect      warbirds.rocks
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/factionwarbase.user.js
 // ==/UserScript==
-let $ = unsafeWindow.$;
-var warreports = JSON.parse(localStorage.getItem('wb_war_reports')) || {};
-var CHAIN_LIMIT = localStorage.getItem('wb_war_reports_chain_limit') || '100';
+let $ = unsafeWindow.$; //Needed to intercept fetch requests
+var warreports = JSON.parse(localStorage.getItem('wb_war_reports')) || {}; //Save war reports to local storage
+var CHAIN_LIMIT = localStorage.getItem('wb_war_reports_chain_limit') || '100'; //only grab chains if over 100 hits
 var faction = '';
 var faction_name = '';
 const userID = document.cookie
 .split('; ')
 .find(row => row.startsWith('uid'))
-.split('=')[1];
+.split('=')[1]; //grab userid from cookie, for later sending to Warbirds.rocks
 
+//CSS styling
 GM_addStyle(`
 div.wb_container {
     margin-top: 10px;
@@ -163,7 +164,8 @@ fill: black;
 
 
 
-
+//function to intercept Torn fetch requests (Torn uses fetch requests for faction chains) When viewing a faction's page, we'll grab the data being updated on the page.
+//Data includes things like, time start, chainID <-- (important for grabbing chain report), factionID, etc.
     function interceptFetch(url,q, callback) {
         var originalFetch = unsafeWindow.fetch;
         unsafeWindow.fetch = function() {
@@ -182,6 +184,7 @@ fill: black;
 
     var observer = new MutationObserver(function(mutations) {
 
+        //if you're on the faction page, get faction info, Name, ID, insert yellow header thing, and update the select boxes if already have saved war reports in memory
         if (window.location.pathname == "/factions.php" && window.location.search.includes("?step=profile") ) {
             if (document.contains(document.getElementById('react-root')) && document.contains(document.querySelector('.faction-info'))) {
                 observer.disconnect();
@@ -191,7 +194,8 @@ fill: black;
                 updateSelects(faction);
             }
         }
-
+        
+        //if you're on the preferences page, insert settings, which is used to show all saved reports and upload them to warbirds.rocks if desired
         if (window.location.pathname == "/preferences.php") {
             if (document.contains(document.querySelector('.preferences-container'))) {
                 observer.disconnect();
@@ -202,7 +206,7 @@ fill: black;
 
     observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
 
-
+    //intercept fetch from somewhat hidden, faction_wars url, grab response data
     interceptFetch("faction_wars.php","step=getwardata", (response, url) => {
         console.log(response);
         modifyWars(response);
@@ -237,6 +241,7 @@ fill: black;
             }
         }
 
+        //search through response data, looking for chains, wall wars, or raids
         if (Object.keys( wardata.wars ).length > 0) {
             for (let i = 0; i < Object.keys(wardata.wars).length; i++) {
                 if (wardata.wars[i].data && wardata.wars[i].data.chain && wardata.wars[i].data.chain.ID && wardata.wars[i].data.chain.chain >= CHAIN_LIMIT) {
@@ -278,6 +283,7 @@ fill: black;
             }
         }
 
+        // since the response data intercepted happens every 5 seconds or so, we only care about saving it if something has changed.
         if (JSON.stringify(warreports) != JSON.stringify(tempreports)) {
             localStorage.setItem("wb_war_reports", JSON.stringify(warreports));
             warreports = JSON.parse(JSON.stringify(warreports));
@@ -286,7 +292,7 @@ fill: black;
 
     });
 
-
+     // Update select boxes with saved war reports if saved
     function updateSelects(factionID) {
         let chainstring = "<option selected></option>";
         let wallstring = "<option selected></option>";
@@ -328,6 +334,7 @@ fill: black;
         }
     }
 
+    // this is where I modify the war box to insert the timer. Only have it set for chains atm cuz lazy
     function modifyWars(response) {
 
         $.each(response.wars,function(index, value){
@@ -361,6 +368,7 @@ fill: black;
 
     }
 
+    //This uploads chainID/war Reports to our faction website for permanent saving/referencing
     function uploadChainID(factionID, chainID) {
         var url = 'https://warbirds.rocks/process/uploadChainID.php?userID='+userID+'&factionID='+factionID+'&chainID='+chainID;
 
@@ -375,6 +383,7 @@ fill: black;
         });
     }
 
+    //function to load faction list in the preferences/settings area
     function loadFactionList() {
         var list = '<option selected></option>';
         if (Object.keys(warreports).length > 0) {
@@ -389,6 +398,7 @@ fill: black;
         }
     }
 
+//function to insert the yellow header on the faction page
     function insertHeader() {
         document.getElementById('react-root').insertAdjacentHTML('afterend', `
 <hr class="delimiter-999 m-top10">
@@ -452,7 +462,7 @@ fill: black;
     }
 
 
-
+//function to insert settings header on preferences page
     function insertSettings() {
         document.querySelector('.preferences-container').insertAdjacentHTML('afterend', `
 <hr class="delimiter-999 m-top10">
