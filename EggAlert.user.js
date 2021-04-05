@@ -7,6 +7,7 @@
 // @match        https://www.torn.com/*
 // @grant        GM_addStyle
 // @run-at       document-start
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
 
 GM_addStyle(`
