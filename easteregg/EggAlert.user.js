@@ -29,7 +29,7 @@ observer.observe(document, {attributes: false, childList: true, characterData: f
 function detectEgg(image) {
   initCSS();
   var opac = opacityRatio(image);
-  if (opac == 1) {
+  if (opac == 0) {
     console.log(`Fake Easter Egg found. Ignoring...`);
     $('img[src^="competition.php"][src*="step=eggImage"][src*="access_token="]').hide(); //prevent accidentally clicking
   } else {
