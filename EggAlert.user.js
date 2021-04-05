@@ -1,28 +1,17 @@
 // ==UserScript==
 // @name         Egg Alert
 // @namespace    Heasleys.EggAlert
-// @version      1.0.1
+// @version      1.0.3
 // @description  Alert and glow on Easter Eggs
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
-// @grant        GM_addStyle
+// @grant        none
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // @run-at       document-start
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
 
-GM_addStyle(`
-#EasterEgg {
-  border-radius: 50%;
-  box-shadow: 0px 0px 90px 40px #FFC107;
-  animation: glow 1.5s ease-out infinite alternate;
-}
 
-@keyframes glow{
-  to {
-    box-shadow: 0px 0px 30px 20px #FFC107;
-  }
-}
-`);
 
 var observer = new MutationObserver(function(mutations, observer) {
       mutations.forEach(function(mutation) {
@@ -39,6 +28,7 @@ var observer = new MutationObserver(function(mutations, observer) {
 observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
 
 function detectEgg(image) {
+  initCSS();
   var opac = opacityRatio(image);
   if (opac == 0) {
     console.log(`Fake Easter Egg found. Ignoring...`);
@@ -64,4 +54,24 @@ function opacityRatio(image) {
         opacity += data[i + 3];
     }
     return (opacity / 255) / (data.length / 4);
+}
+
+
+function initCSS() {
+  const ele= document.createElement('style');
+  ele.type = 'text/css';
+  ele.innerHTML = `
+#EasterEgg {
+border-radius: 50%;
+box-shadow: 0px 0px 90px 40px #FFC107;
+animation: glow 1.5s ease-out infinite alternate;
+}
+
+@keyframes glow{
+to {
+box-shadow: 0px 0px 30px 20px #FFC107;
+}
+}
+  `;
+  document.head.appendChild(ele);
 }
