@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Egg Alert
 // @namespace    Heasleys.EggAlert
-// @version      1.0.2
+// @version      1.0.3
 // @description  Alert and glow on Easter Eggs
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
 // @grant        none
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // @run-at       document-start
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
