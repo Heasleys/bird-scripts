@@ -10,7 +10,7 @@
 
 
 (function() {
-  var observer = new MutationObserver(function(mutations, observer) {
+  var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
           for (const element of mutation.addedNodes) {
             if (element.querySelector && element.querySelector('img[src^="competition.php"][src*="step=eggImage"][src*="access_token="]')) {
