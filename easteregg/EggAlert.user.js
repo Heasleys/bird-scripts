@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Egg Alert
 // @namespace    Heasleys.EggAlert
-// @version      1.0.4
+// @version      1.0.5
 // @description  Alert and glow on Easter Eggs
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
@@ -10,7 +10,7 @@
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
 
-
+(function() {
 
 var observer = new MutationObserver(function(mutations, observer) {
       mutations.forEach(function(mutation) {
@@ -73,3 +73,5 @@ box-shadow: 0px 0px 30px 20px #FFC107;
   `;
   document.head.appendChild(ele);
 }
+
+})();
