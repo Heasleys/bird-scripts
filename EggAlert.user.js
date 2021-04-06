@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         Egg Alert
 // @namespace    Heasleys.EggAlert
-// @version      1.0.3
+// @version      1.0.4
 // @description  Alert and glow on Easter Eggs
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/*
 // @grant        none
-// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
-// @run-at       document-start
+// @run-at       document-end
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
 
@@ -19,7 +18,6 @@ var observer = new MutationObserver(function(mutations, observer) {
           if (element.querySelector && element.querySelector('img[src^="competition.php"][src*="step=eggImage"][src*="access_token="]')) {
             var image = element.querySelector('img[src^="competition.php"][src*="step=eggImage"][src*="access_token="]');
             image.onload = function() {detectEgg(this);}
-            observer.disconnect();
           }
         }
       });
