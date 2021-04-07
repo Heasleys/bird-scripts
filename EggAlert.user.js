@@ -10,6 +10,7 @@
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/EggAlert.user.js
 // ==/UserScript==
 
+// anonymous function wrapper to prevent other scripts interfering with this script
 (function() {
 
       // Scan the page for changes in the DOM (elements on the page)
@@ -76,7 +77,7 @@ function opacityRatio(image) {
     for (let i = 0; i < data.length; i += 4) {
         opacity += data[i + 3];
     }
-      // return the opacity level
+      // return the opacity level [0-1]
     return (opacity / 255) / (data.length / 4);
 }
 
@@ -98,7 +99,7 @@ box-shadow: 0px 0px 30px 20px #FFC107;
 }
 }
   `;
-  document.head.appendChild(ele);
+  document.head.appendChild(ele); // append the css styles above to the header of the page
 }
 
-})();
+})();// end of anonymous function wrapper, then start the anonymous function
