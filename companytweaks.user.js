@@ -9,6 +9,30 @@
 // @grant        none
 // ==/UserScript==
 
+/*
+<div class="effectiveness clearfix" tabindex="0" aria-label="Vulture: Working stats: +134; Settled in: +10; Book: +50; Merits: +9; Director education: +12;  Effectiveness: 215; " 
+data-multipliers="[134, 10, 50, 9, 12, 0, 0, 0, 0]" data-effectiveness="215" data-pfunds="">
+<div class="arrow-999 t-show right"></div>
+<p aria-hidden="true" class="desc effectiveness-value t-gray-9 effectiveness-bright-green">215</p>
+<ul class="employee-effectiveness">
+<li class="active"></li><li class="active"></li><li class="active"></li><li class="active"></li><li class="active"></li> </ul>
+</div>
+
+efficiency data = [145, 2, 0, 0, 12, 0, 0, -16, 0]
+                  [134, 10, 50, 9, 12, 0, 0, 0, 0]
+
+efficiency[0] = base efficiency from work stats
+efficiency[1] = settled in bonus
+efficiency[2] = book bonus
+efficiency[3] = player merits bonus
+efficiency[4] = Director education bonus
+efficiency[5] =
+efficiency[6] =
+efficiency[7] = addiction penalty
+efficiency[8] = inactivity penalty??
+
+*/
+
 if (location.hash === "#/option=stock") {
     setTimeout(fillStock, 1000);
 }
