@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         War Reports
 // @namespace    Heasleys.WarReports
-// @version      1.1
+// @version      1.3
 // @description  Traverse Wall/Chain Reports + Total Joins for wall reports
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/war.php?step=*
@@ -60,6 +60,20 @@ text-decoration: none;
 .float-right {
 float: right;
 }
+
+ul.members-names-rows li .user-status {
+display: none !important;
+}
+ul.members-names-rows li a.user.faction {
+display: none !important;
+}
+ul.members-names-rows li .t-overflow {
+overflow: unset !important;
+}
+
+ul.members-names-rows li div.member.icons {
+justify-content: left !important;
+}
 `);
 
 var wb_header = `
@@ -72,8 +86,34 @@ var wb_header = `
     'use strict';
     var observer = new MutationObserver(function(mutations) {
 
-        if (document.contains(document.querySelector('.content-title'))) {
+        if (document.contains(document.querySelector('.report-members-stats-content'))) {
 
+            let url = window.location.toString();
+
+            if (url.includes('chainID')) {
+                modifyNames();
+                observer.disconnect();
+            }
+
+            if (url.includes('warID')) {
+                countFriendly();
+                countEnemy();
+                observer.disconnect();
+            }
+
+            if (url.includes('raidID')) {
+                countFriendly();
+                countEnemy();
+                observer.disconnect();
+            }
+
+
+            
+        }
+    });
+
+    var titleObserver = new MutationObserver(function(mutations) {
+        if (document.contains(document.querySelector('.content-title'))) {
             $('.content-title').after(wb_header);
 
             let url = window.location.toString();
@@ -81,28 +121,26 @@ var wb_header = `
             if (url.includes('chainID')) {
                 let chain_id = url.split("=").pop();
                 $('.wb_title').append('<span class="float-right"><a class="wb_button" href="https://www.torn.com/war.php?step=chainreport&chainID='+ (Number(chain_id)-1) +'">Chain ID: ' + (Number(chain_id)-1) + '</a><a class="wb_button" href="https://www.torn.com/war.php?step=chainreport&chainID='+ (Number(chain_id)+1) +'">Chain ID: ' + (Number(chain_id)+1) + '</a></span>');
+                titleObserver.disconnect();
             }
 
             if (url.includes('warID')) {
                 let war_id = url.split("=").pop();
                 $('.wb_title').append('<span class="float-right"><a class="wb_button" href="https://www.torn.com/war.php?step=warreport&warID='+ (Number(war_id)-1) +'">War ID: ' + (Number(war_id)-1) + '</a><a class="wb_button" href="https://www.torn.com/war.php?step=warreport&warID='+ (Number(war_id)+1) +'">War ID: ' + (Number(war_id)+1) + '</a></span>');
-                countFriendly();
-                countEnemy();
+                titleObserver.disconnect();
             }
 
             if (url.includes('raidID')) {
                 let raid_id = url.split("=").pop();
                 $('.wb_title').append('<span class="float-right"><a class="wb_button" href="https://www.torn.com/war.php?step=raidreport&raidID='+ (Number(raid_id)-1) +'">Raid ID: ' + (Number(raid_id)-1) + '</a><a class="wb_button" href="https://www.torn.com/war.php?step=raidreport&raidID='+ (Number(raid_id)+1) +'">Raid ID: ' + (Number(raid_id)+1) + '</a></span>');
-                countFriendly();
-                countEnemy();
+                titleObserver.disconnect();
             }
-
-
-            observer.disconnect();
         }
     });
 
     observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+    titleObserver.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+
 })();
 
 function countFriendly() {
@@ -183,3 +221,12 @@ function countEnemy() {
 
 $('#enemy-faction').find('ul.members-list').prepend(li);
 }
+
+
+function modifyNames() {
+    $('.members-names-rows > li').each(function(){
+       let a = $(this).find('a.user.name');
+       let nameid = a.data('placeholder');
+        a.find('div').text(nameid);
+    });
+};
