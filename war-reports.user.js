@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         War Reports
 // @namespace    Heasleys.WarReports
-// @version      1.3
+// @version      1.3.1
 // @description  Traverse Wall/Chain Reports + Total Joins for wall reports
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/war.php?step=*
@@ -107,6 +107,13 @@ var wb_header = `
                 observer.disconnect();
             }
 
+            if (url.includes('rankID')) {
+             observer.disconnect();
+            }
+            else {
+             observer.disconnect();
+            }
+
 
             
         }
@@ -133,6 +140,15 @@ var wb_header = `
             if (url.includes('raidID')) {
                 let raid_id = url.split("=").pop();
                 $('.wb_title').append('<span class="float-right"><a class="wb_button" href="https://www.torn.com/war.php?step=raidreport&raidID='+ (Number(raid_id)-1) +'">Raid ID: ' + (Number(raid_id)-1) + '</a><a class="wb_button" href="https://www.torn.com/war.php?step=raidreport&raidID='+ (Number(raid_id)+1) +'">Raid ID: ' + (Number(raid_id)+1) + '</a></span>');
+                titleObserver.disconnect();
+            }
+
+            if (url.includes('rankID')) {
+                let rank_id = url.split("=").pop();
+                $('.wb_title').append('<span class="float-right"><a class="wb_button" href="https://www.torn.com/war.php?step=rankreport&rankID='+ (Number(rank_id)-1) +'">Rank ID: ' + (Number(rank_id)-1) + '</a><a class="wb_button" href="https://www.torn.com/war.php?step=rankreport&rankID='+ (Number(rank_id)+1) +'">Rank ID: ' + (Number(rank_id)+1) + '</a></span>');
+                titleObserver.disconnect();
+            }
+            else {
                 titleObserver.disconnect();
             }
         }
