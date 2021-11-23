@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.3.1
+// @version      1.3.2
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
 // @match        https://www.torn.com/preferences.php*
-// @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
 // @grant        GM_addStyle
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/factionwarbase.user.js
@@ -546,4 +545,3 @@ fill: black;
 
         return time;
     }
-
