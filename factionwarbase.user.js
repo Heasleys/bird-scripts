@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Faction Warbase
 // @namespace    Heasleys.factionwarbase
-// @version      1.3.2
+// @version      1.3.3
 // @description  Save other factions chains/walls to view later
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/factions.php?step=profile*
@@ -15,10 +15,6 @@ var warreports = JSON.parse(localStorage.getItem('wb_war_reports')) || {}; //Sav
 var CHAIN_LIMIT = localStorage.getItem('wb_war_reports_chain_limit') || '100'; //only grab chains if over 100 hits
 var faction = '';
 var faction_name = '';
-const userID = document.cookie
-.split('; ')
-.find(row => row.startsWith('uid'))
-.split('=')[1]; //grab userid from cookie, for later sending to Warbirds.rocks
 
 //CSS styling
 GM_addStyle(`
@@ -193,7 +189,7 @@ fill: black;
             }
         }
         
-        //if you're on the preferences page, insert settings, which is used to show all saved reports and upload them to warbirds.rocks if desired
+        //if you're on the preferences page, insert settings, which is used to show all saved reports
         if (window.location.pathname == "/preferences.php") {
             if (document.contains(document.querySelector('.preferences-container'))) {
                 observer.disconnect();
