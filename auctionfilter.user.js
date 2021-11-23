@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auction Filter
 // @namespace    Heasleys.AuctionFilter
-// @version      1.1.1
+// @version      1.1.2
 // @description  Filter Items from the Torn Auction
 // @author       Heasleys4hemp [1468764]
 // @match        https://www.torn.com/amarket.php*
@@ -92,20 +92,20 @@ $(window).load(function () {
         $(this).clone().prependTo($(this).parent());
     });
 
-    function filter() {
-        //array list of items to hide
-        //I plan on making this better in the future, but it works for what I need it for.
-        var arrList = ['Guandao','Salt Shaker','Cricket Bat', 'Psycho Clown Mask', 'Twin Tiger Hooks', 'Old Lady Mask', 'Scarred Man Mask', 'Nun Mask', 'Young Lady Mask', 'Ginger Kid Mask', 'Moustache Man Mask', 'Kama', 'Exotic Gentleman Mask', 'Wushu Double Axes', 'Mini Cooper S'];
-        //MutationObserver used to monitor specific activity
+//     function filter() {
+//         //array list of items to hide
+//         //I plan on making this better in the future, but it works for what I need it for.
+//         var arrList = ['Guandao','Salt Shaker','Cricket Bat', 'Psycho Clown Mask', 'Twin Tiger Hooks', 'Old Lady Mask', 'Scarred Man Mask', 'Nun Mask', 'Young Lady Mask', 'Ginger Kid Mask', 'Moustache Man Mask', 'Kama', 'Exotic Gentleman Mask', 'Wushu Double Axes', 'Mini Cooper S'];
+//         //MutationObserver used to monitor specific activity
 
-        //observing item list div for li's that contain 'Cricket Bat' (now list of items)
-        var i=0;
-        for (; i<arrList.length; i++) {
-            const cricket = $("div.items-list-wrap > ul.items-list.t-blue-cont.h > li:contains('"+arrList[i]+"')");
-            cricket.hide();
-        }
+//         //observing item list div for li's that contain 'Cricket Bat' (now list of items)
+//         var i=0;
+//         for (; i<arrList.length; i++) {
+//             const cricket = $("div.items-list-wrap > ul.items-list.t-blue-cont.h > li:contains('"+arrList[i]+"')");
+//             cricket.hide();
+//         }
 
-    }//end of filter
+//     }//end of filter
 
     $( "#afind" ).change(search());
 
@@ -141,7 +141,7 @@ $(window).load(function () {
         // create an observer instance
         var observer = new MutationObserver(function(mutations) {
 
-            filter();
+            //filter();
             search();
 
         });
