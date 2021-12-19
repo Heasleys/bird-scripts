@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.2
+// @version      1.2.1
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -95,17 +95,17 @@ function initCTExtended() {
 GM_addStyle(`
 
   .wb-ct-title {
-    border: 1px solid #a7bec9;
+    border: 1px solid var(--ct-hud-title-border-color);
     padding: 5px;
     margin-bottom: 10px;
     display: block;
-    color: #668fa3;
+    color: var(--ct-title-font-color);
     text-shadow: 0 1px 0 hsla(0,0%,100%,.45);
     font-size: 15px;
     letter-spacing: 1px;
     font-weight: 400;
     line-height: 1.6;
-    background: linear-gradient(180deg,#fff,#e0edf3 99%);
+    background: var(--ct-title-bg);
     border-radius: 5px 5px 0 0;
   }
 
@@ -148,6 +148,20 @@ GM_addStyle(`
      height: 72px;
      border: 1px solid #bfd0d8;
    }
+
+ body.dark-mode #ct-message:after {
+    background: rgba(0,0,0,.2);
+    bottom: 0;
+    content: "";
+    display: none;
+    display: var(--ct-overlay-display);
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
 
    .wb-extended .wb-hidden {
      display: none;
