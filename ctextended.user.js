@@ -1,30 +1,30 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.2.2
+// @version      1.2.3
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
 // @grant        GM_addStyle
-// @require      http://code.jquery.com/jquery-1.8.2.min.js
-// @run-at       document-end
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/ctextended.user.js
 // ==/UserScript==
+(function() {
+    'use strict';
 
-var ctobserver = new MutationObserver(function(mutations) {
-    if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length == 0) {
-        initCTExtended();
-        ctobserver.disconnect();
-    }
-});
-
-window.addEventListener('load', function() {
-    ctobserver.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
-}, false);
+    var ctobserver = new MutationObserver(function(mutations) {
+        if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length == 0) {
+            initCTExtended();
+            ctobserver.disconnect();
+        }
+    });
 
 
-function initCTExtended() {
-    $('.core-layout__viewport').before(`
+    window.addEventListener('load', (event) => {
+        ctobserver.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+    });
+
+    function initCTExtended() {
+        $('.core-layout__viewport').before(`
     <div class="wb-ct-title" id="wb-ct-extended">
       <span>CT Extended
         <button class="wb-ct-button" id="toggleExtend">Extend View</button>
@@ -46,27 +46,33 @@ function initCTExtended() {
         $('.user-map').toggleClass('wb-user-map');
     });
 
-    interceptFetch('christmas_town.php', (response, url) => {
-        if ($('.content-wrapper.wb-extended').length > 0) {
-            if (response && response.mapData) {
-                if (response.mapData.trigger) {
-                    if (response.mapData.trigger.message) {
-                        $('#ct-message').text(response.mapData.trigger.message);
-                    }
 
-                    if (response.mapData.trigger.miniGameType && response.mapData.trigger.miniGameType != "Teleport") {
-                        console.log("I found a mini game");
-                        console.log(response.mapData.trigger.miniGameType);
-                        $('.user-map-container').addClass('wb-hidden');
-                        $('.status-area-container').removeClass('wb-hidden');
-                    } else {
-                        $('.user-map-container').removeClass('wb-hidden');
-                        $('.status-area-container').addClass('wb-hidden');
-                    }
+    let original_fetch = unsafeWindow.fetch;
+    unsafeWindow.fetch = async (url, init) => {
+        let response = await original_fetch(url, init)
+        let respo = response.clone();
+        respo.json().then((data) => {
+            if (url.includes("christmas_town.php")) {
+                if ($('.content-wrapper.wb-extended').length > 0) {
+                    if (response && response.mapData) {
+                        if (response.mapData.trigger) {
+                            if (response.mapData.trigger.message) {
+                                $('#ct-message').text(response.mapData.trigger.message);
+                            }
 
-                    if (response.mapData.trigger.item) {
-                        let text = $('#ct-message').text();
-                        $('#ct-message').html(`
+                            if (response.mapData.trigger.miniGameType && response.mapData.trigger.miniGameType != "Teleport") {
+                                console.log("I found a mini game");
+                                console.log(response.mapData.trigger.miniGameType);
+                                $('.user-map-container').addClass('wb-hidden');
+                                $('.status-area-container').removeClass('wb-hidden');
+                            } else {
+                                $('.user-map-container').removeClass('wb-hidden');
+                                $('.status-area-container').addClass('wb-hidden');
+                            }
+
+                            if (response.mapData.trigger.item) {
+                                let text = $('#ct-message').text();
+                                $('#ct-message').html(`
                          ${text}<br>
                          <div class='wb-itemImage'>
                          <img src="${response.mapData.trigger.item.image.url}">
@@ -83,8 +89,11 @@ function initCTExtended() {
                     $('.status-area-container').addClass('wb-hidden');
                 }
             }
-        }
-    });
+                }
+            }
+        })
+        return response;
+    }
 
 }
 
@@ -94,7 +103,7 @@ function initCTExtended() {
 
 
 
-GM_addStyle(`
+    GM_addStyle(`
 
   .wb-ct-title {
     border: 1px solid var(--ct-hud-title-border-color);
@@ -180,8 +189,8 @@ GM_addStyle(`
    }
 
    .d .wb-extended #ct-wrap .map-overview {
-     width: 784px;
-     height: 600px;
+     width: 784px !important;
+     height: 600px !important;
    }
 
    .d .wb-extended #ct-wrap .map-overview #world {
@@ -266,17 +275,4 @@ GM_addStyle(`
 
   `);
 
-
-function interceptFetch(url, callback) {
-    unsafeWindow.fetch = async (input, options) => {
-        const response = await fetch(input, options)
-
-        if (response.url.startsWith("https://www.torn.com/" + url)) {
-            let res = response.clone();
-
-            Promise.resolve(res.json().then((json) => callback(json, res.url)));
-        }
-
-        return response;
-    }
-}
+})();
