@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.2.3
+// @version      1.3.0
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -28,10 +28,12 @@
     <div class="wb-ct-title" id="wb-ct-extended">
       <span>CT Extended
         <button class="wb-ct-button" id="toggleExtend">Extend View</button>
-        <button class="wb-ct-button" id="toggleBorder" hidden>Toggle Fog</button>
+        <button class="wb-ct-button" id="toggleFog">Toggle Fog</button>
       </span>
     </div>
   `);
+
+        $('#map').prepend(`<div class="wb_fog left"></div><div class="wb_fog right"></div><div class="wb_fog top"></div><div class="wb_fog bottom"></div><div class="wb_fog rightborderfix"></div><div class="wb_fog leftborderfix"></div>`);
 
     $('.user-map-container').before(`<p id="ct-message" style="display: none;">Welcome to Christmas Town!</p>`);
 
@@ -42,8 +44,8 @@
         $('#ct-message').toggle();
     });
 
-    $('#toggleBorder').on('click', function(){
-        $('.user-map').toggleClass('wb-user-map');
+    $('#toggleFog').on('click', function(){
+        $('.content-wrapper').toggleClass('wb-extended-fog');
     });
 
 
@@ -194,9 +196,13 @@
    }
 
    .d .wb-extended #ct-wrap .map-overview #world {
-     left: 31%;
-     top: 25%;
+     /*left: 31%;*/
+     /*top: 25%;*/
+     top: 135px;
+     left: 225px;
    }
+
+
 
    .d .wb-extended #ct-wrap .user-map-container .user-map::before {
      background: unset;
@@ -272,6 +278,66 @@
       height: 500px;
       position: absolute;
    }
+
+   .wb-extended.wb-extended-fog .wb_fog {
+   z-index: 99;
+   position: absolute;
+   background: url(/images/v2/christmas_town/snow.jpg) 0 0 repeat;
+   box-sizing: border-box;
+   }
+
+   .wb-extended.wb-extended-fog .wb_fog.left {
+    width: 165px;
+    height: 600px;
+    border-right: 1px solid var(--ct-hud-primary-title-divider-color);
+    }
+    .wb-extended.wb-extended-fog .wb_fog.right {
+    left: 619px;
+    width: 165px;
+    height: 600px;
+    border-left: 1px solid var(--ct-hud-primary-title-divider-color);
+    }
+
+    .wb-extended.wb-extended-fog .wb_fog.top {
+    width: 784px;
+    height: 75px;
+    border-bottom: 1px solid var(--ct-hud-primary-title-divider-color);
+    }
+
+    .wb-extended.wb-extended-fog .wb_fog.bottom {
+    top: 525px;
+    width: 784px;
+    height: 75px;
+    border-top: 1px solid var(--ct-hud-primary-title-divider-color);
+    }
+
+    .wb-extended.wb-extended-fog .wb_fog.leftborderfix {
+    width: 164px;
+    height: 600px;
+    left: 620px;
+    }
+    .wb-extended.wb-extended-fog .wb_fog.rightborderfix {
+    width: 164px;
+    height: 600px;
+    }
+
+    body.dark-mode .wb-extended.wb-extended-fog .wb_fog:after {
+    background: rgba(0,0,0,.2);
+    bottom: 0;
+    content: "";
+    display: none;
+    display: var(--ct-overlay-display);
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+
+
+
+
 
   `);
 
