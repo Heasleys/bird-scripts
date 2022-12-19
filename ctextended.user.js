@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.3.0
+// @version      1.4.0
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
@@ -55,16 +55,17 @@
         let respo = response.clone();
         respo.json().then((data) => {
             if (url.includes("christmas_town.php")) {
+                console.log("CT EXTENDED", data);
                 if ($('.content-wrapper.wb-extended').length > 0) {
-                    if (response && response.mapData) {
-                        if (response.mapData.trigger) {
-                            if (response.mapData.trigger.message) {
-                                $('#ct-message').text(response.mapData.trigger.message);
+                    if (data && data.mapData) {
+                        if (data.mapData.trigger) {
+                            if (data.mapData.trigger.message) {
+                                $('#ct-message').text(data.mapData.trigger.message);
                             }
 
-                            if (response.mapData.trigger.miniGameType && response.mapData.trigger.miniGameType != "Teleport") {
+                            if (data.mapData.trigger.miniGameType && data.mapData.trigger.miniGameType != "Teleport") {
                                 console.log("I found a mini game");
-                                console.log(response.mapData.trigger.miniGameType);
+                                console.log(data.mapData.trigger.miniGameType);
                                 $('.user-map-container').addClass('wb-hidden');
                                 $('.status-area-container').removeClass('wb-hidden');
                             } else {
@@ -72,18 +73,18 @@
                                 $('.status-area-container').addClass('wb-hidden');
                             }
 
-                            if (response.mapData.trigger.item) {
+                            if (data.mapData.trigger.item) {
                                 let text = $('#ct-message').text();
                                 $('#ct-message').html(`
                          ${text}<br>
                          <div class='wb-itemImage'>
-                         <img src="${response.mapData.trigger.item.image.url}">
+                         <img src="${data.mapData.trigger.item.image.url}">
                          </div>
                         `);
                     }
                 }
 
-                if (response.mapData.cellEvent && response.mapData.cellEvent.type != "teleport") {
+                if (data.mapData.cellEvent && data.mapData.cellEvent.type != "teleport") {
                     $('.user-map-container').addClass('wb-hidden');
                     $('.status-area-container').removeClass('wb-hidden');
                 } else {
