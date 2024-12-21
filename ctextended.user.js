@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.5.0
+// @version      1.5.1
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
 // @grant        GM_addStyle
-// @updateURL    https://github.com/Heasleys/bird-scripts/raw/refs/heads/master/ctextended.user.js
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/ctextended.user.js
 // ==/UserScript==
 var ct_ex_on = localStorage.getItem('wb_ct_ex_on') || 'false';
 var ct_ex_fog = localStorage.getItem('wb_ct_ex_fog') || 'false';
@@ -277,12 +277,12 @@ if (typeof GM.addStyle == "undefined") { //Add GM.addStyle for browsers that do 
     }
 
     .d .wb-extended .status-area-container.wb-eventmode>.text-container,
-    .d .wb-extended .status-area-container>.text-container[class*="customImage_"] {
+    .d .wb-extended .status-area-container>.text-container[class*="grinch_"] {
         min-height: 468px;
     }
 
     .d .wb-extended .status-area-container.wb-eventmode>div,
-    .d .wb-extended .status-area-container>.text-container[class*="customImage_"] {
+    .d .wb-extended .status-area-container>.text-container[class*="grinch_"] {
         background-repeat: no-repeat !important;
         background-position: center !important;
         padding-bottom: 30px;
