@@ -6,7 +6,7 @@
 // @author       Heasleys4hemp [1468764]
 // @match        *.torn.com/christmas_town.php*
 // @grant        GM_addStyle
-// @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/ctextended.user.js
+// @updateURL    https://github.com/Heasleys/bird-scripts/raw/refs/heads/master/ctextended.user.js
 // ==/UserScript==
 var ct_ex_on = localStorage.getItem('wb_ct_ex_on') || 'false';
 var ct_ex_fog = localStorage.getItem('wb_ct_ex_fog') || 'false';
