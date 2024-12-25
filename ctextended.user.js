@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.5.1
+// @version      1.5.2
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
-// @match        *.torn.com/christmas_town.php*
+// @match        https://*.torn.com/christmas_town.php*
 // @grant        GM_addStyle
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/ctextended.user.js
 // ==/UserScript==
