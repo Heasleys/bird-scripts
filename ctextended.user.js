@@ -1,13 +1,18 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.5.2
+// @version      1.5.3
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        https://*.torn.com/christmas_town.php*
-// @grant        GM_addStyle
+// @match        https://torn.com/christmas_town.php*
+// @grant        GM.addStyle
+// @run-at       document-start
+// @require      https://www.torn.com/js/script/lib/jquery-1.8.2.js
 // @updateURL    https://github.com/Heasleys/bird-scripts/raw/master/ctextended.user.js
 // ==/UserScript==
+'use strict';
+
 var ct_ex_on = localStorage.getItem('wb_ct_ex_on') || 'false';
 var ct_ex_fog = localStorage.getItem('wb_ct_ex_fog') || 'false';
 
@@ -30,24 +35,25 @@ if (typeof GM.addStyle == "undefined") { //Add GM.addStyle for browsers that do 
     };
 }
 
+jQuery.expr[':'].icontains = function(a, i, m) {
+  return jQuery(a).text().toUpperCase()
+      .indexOf(m[3].toUpperCase()) >= 0;
+};
 
+var ctobserver = new MutationObserver(function(mutations) {
+    if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length == 0) {
+        initCTExtended();
+    }
+    if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length > 0) {
+        ctobserver.disconnect();
+    }
+});
 
-(function() {
-    'use strict';
+window.addEventListener('load', (event) => {
+    ctobserver.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+});
 
-    var ctobserver = new MutationObserver(function(mutations) {
-        if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length == 0) {
-            initCTExtended();
-            ctobserver.disconnect();
-        }
-    });
-
-    window.addEventListener('load', (event) => {
-        ctobserver.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
-    });
-
-
-    function initCTExtended() {
+function initCTExtended() {
         $('.core-layout__viewport').before(`
         <div class="wb-ct-title" id="wb-ct-extended">
             <span>CT Extended
@@ -99,6 +105,7 @@ if (typeof GM.addStyle == "undefined") { //Add GM.addStyle for browsers that do 
             $('.content-wrapper').toggleClass('wb-extended-fog');
         }
 
+        insertStyle();
 
         let original_fetch = unsafeWindow.fetch;
         unsafeWindow.fetch = async (url, init) => {
@@ -149,12 +156,8 @@ if (typeof GM.addStyle == "undefined") { //Add GM.addStyle for browsers that do 
     }
 
 
-
-
-
-
-
-    GM_addStyle(`
+function insertStyle() {
+    GM.addStyle(`
 .wb-ct-title {
     border: 1px solid var(--ct-hud-title-border-color);
     padding: 5px;
@@ -399,10 +402,4 @@ body.dark-mode .wb-extended.wb-extended-fog .wb_fog:after {
     }
 }
   `);
-
-})();
-
-jQuery.expr[':'].icontains = function(a, i, m) {
-  return jQuery(a).text().toUpperCase()
-      .indexOf(m[3].toUpperCase()) >= 0;
-};
+}
