@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CTMAP - Extended View
 // @namespace    Heasleys.ctextended
-// @version      1.5.3
+// @version      1.5.4
 // @description  My weird project to extend and redesign the christmas town map viewer
 // @author       Heasleys4hemp [1468764]
 // @match        https://*.torn.com/christmas_town.php*
@@ -35,11 +35,6 @@ if (typeof GM.addStyle == "undefined") { //Add GM.addStyle for browsers that do 
     };
 }
 
-jQuery.expr[':'].icontains = function(a, i, m) {
-  return jQuery(a).text().toUpperCase()
-      .indexOf(m[3].toUpperCase()) >= 0;
-};
-
 var ctobserver = new MutationObserver(function(mutations) {
     if ($("#ct-wrap").length == 1 && $('#wb-ct-extended').length == 0) {
         initCTExtended();
@@ -54,6 +49,11 @@ window.addEventListener('load', (event) => {
 });
 
 function initCTExtended() {
+    jQuery.expr[':'].icontains = function(a, i, m) {
+      return jQuery(a).text().toUpperCase()
+          .indexOf(m[3].toUpperCase()) >= 0;
+    };
+
         $('.core-layout__viewport').before(`
         <div class="wb-ct-title" id="wb-ct-extended">
             <span>CT Extended
