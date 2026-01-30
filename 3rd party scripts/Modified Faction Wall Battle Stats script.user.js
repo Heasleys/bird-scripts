@@ -9,8 +9,6 @@
 // @connect     tornstats.com
 // @version     1.0.1
 // @author      boo [1544641] (originally by finally)
-// @downloadURL https://update.greasyfork.org/scripts/461478/Carbon%3A%20Modified%20Faction%20Wall%20Battle%20Stats%20script%20%28originally%20by%20finally%29.user.js
-// @updateURL https://update.greasyfork.org/scripts/461478/Carbon%3A%20Modified%20Faction%20Wall%20Battle%20Stats%20script%20%28originally%20by%20finally%29.meta.js
 // ==/UserScript==
 
 let apiKey = localStorage["finally.torn.api"] || null;
